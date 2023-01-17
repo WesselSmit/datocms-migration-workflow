@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "default": {
+      "logLevel": "BODY",
+      "migrations": {
+        "directory": "./datocms/migrations",
+        "modelApiKey": "schema_migration"
+      }
+    }
+  }
+}

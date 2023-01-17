@@ -1,0 +1,5 @@
+query migrations($skip: IntType) {
+  allSchemaMigrations(skip: $skip) {
+    name
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "colors",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WesselSmit/colors.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WesselSmit/colors/issues"
+  },
+  "homepage": "https://github.com/WesselSmit/colors#readme",
+  "scripts": {
+    "datocms:create-env": "node datocms/scripts/create-env.mjs",
+    "datocms:create-migration": "APP_ROOT=. node datocms/scripts/create-migration.mjs",
+    "datocms:promote-env": "node datocms/scripts/prmote-env.mjs"
+  },
+  "devDependencies": {
+    "@datocms/cli": "^1.0.21",
+    "dotenv-safe": "^8.2.0",
+    "node-fetch": "^3.3.0"
+  }
+}
