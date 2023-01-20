@@ -34,6 +34,16 @@ This will create a new migration file in the migrations directory as specified i
 
 **Promoting an environment**
 
-// todo
+When you have 'pending migrations'* locally on your machine, you can promote these migrations to be part of the new primary environment by running the following command:
 
-// todo: alle required constants/env vars + verwachte structuur van datocms (een schema_migration model is needed for example)
+```sh
+$ npm run datocms:promote-env
+```
+
+* _pending migrations = migrations you've generated on a datocms environment, but have not been applied to the primary datocms environment._
+
+### Workflow
+
+// todo use examples to illustrate the workflow this project offers users (also describe the steps between the npm scripts they need to run [e.g. making changes, testing and confirming everything still works]).
+
+// todo: list all required constants/env vars + the expected structure of the datocms instance (currently: a schema_migration model is needed for example)

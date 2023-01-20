@@ -1,6 +1,6 @@
 import fetch from 'node-fetch'
 import * as dotenv from 'dotenv-safe'
-import { errorLog } from './lib/cli.mjs'
+import { errorLog } from './cli.mjs'
 import loadQuery from './load-query.mjs'
 
 dotenv.config()
@@ -38,6 +38,23 @@ export async function getPrimaryEnv() {
   const primaryEnv = environments.find(env => env.meta.primary)
 
   return primaryEnv
+}
+
+export async function createNewPrimaryEnvId() {
+  const { id: primaryEnvId } = await getPrimaryEnv()
+  const [_, currentIndex] = primaryEnvId.split('-')
+  const currentIndexParsed = parseInt(currentIndex)
+  let newIndex
+
+  if (Number.isNaN(currentIndexParsed)) {
+    newIndex = 1
+  } else {
+    newIndex = currentIndexParsed + 1
+  }
+
+  const newPrimaryEnvId = `main-${newIndex}`
+
+  return newPrimaryEnvId
 }
 
 
@@ -80,6 +97,8 @@ async function datoContentRequest(query, {
       errorLog(error)
     }
   }
+  // TODO while() can be rewritten using a function that calls itself recursively (for this you'll need to revert the 'if' statement that has the 'break' statement [then in the reverted 'if' statement you van replace the 'break' statement with the recursive call])
+  // TODO introduce a check that, before a fetch, check what vars + which fieldName are passen and then (using a stirng operator) check if the query actually contains the passed vars/fieldName. If not, let the dev/user know they're passing the vars/fieldName to the query but that the query does not contain them.
 
   if (fieldName) {
     let data = { [fieldName]: [] }

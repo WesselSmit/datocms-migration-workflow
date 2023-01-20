@@ -16,7 +16,7 @@
   "scripts": {
     "datocms:create-env": "node datocms/scripts/create-env.mjs",
     "datocms:create-migration": "APP_ROOT=. node datocms/scripts/create-migration.mjs",
-    "datocms:promote-env": "node datocms/scripts/prmote-env.mjs"
+    "datocms:promote-env": "node datocms/scripts/promote-env.mjs"
   },
   "devDependencies": {
     "@datocms/cli": "^1.0.21",
