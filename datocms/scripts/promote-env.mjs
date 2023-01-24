@@ -1,4 +1,5 @@
-import { log, errorLog } from './lib/cli.mjs'
+import { stop } from './lib/cli.mjs'
+import { log, errorLog, prompt } from './lib/console.mjs'
 import datoCmd from './lib/dato-cmd.mjs'
 import { getPrimaryEnv, createNewPrimaryEnvId } from './lib/dato-helpers.mjs'
 
@@ -9,9 +10,19 @@ try {
 
   await datoCmd(`npx datocms environments:fork ${currentPrimaryEnvId} ${newPrimaryEnvId}`)
   await datoCmd(`npx datocms maintenance:on`)
-  // todo add option to use '--force' flag in "npx datocms maintenance:on --force"
   await datoCmd(`npx datocms migrations:run --source=${newPrimaryEnvId} --in-place`)
-  // todo users should really check/test the changes one more time before continuing with the promotion - maybe add a prompt here that awaits a y/n response?
+
+  log(`Check your changes one last time on the "${newPrimaryEnvId}" environment.`)
+  log(`When you have checked the changes, confirm whether you want to continue the promotion.`)
+
+  const continuePromotion = await prompt('Do you want to continue the promotion?', { isYesNoQuestion: true })
+
+  if (!continuePromotion) {
+    await datoCmd(`npx datocms environments:destroy ${newPrimaryEnvId}`)
+    await datoCmd(`npx datocms maintenance:off`)
+    log(`Promotion aborted. Deleted the "${newPrimaryEnvId}" environment.`)
+    stop()
+  }
 
   await datoCmd(`npx datocms environments:promote ${newPrimaryEnvId}`)
   await datoCmd(`npx datocms maintenance:off`)

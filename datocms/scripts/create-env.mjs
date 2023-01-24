@@ -1,4 +1,5 @@
-import { args, log, errorLog } from './lib/cli.mjs'
+import { args } from './lib/cli.mjs'
+import { log, errorLog } from './lib/console.mjs'
 import datoCmd from './lib/dato-cmd.mjs'
 import { getPrimaryEnv } from './lib/dato-helpers.mjs'
 import { TEST_ENV_NAME_SUFFIX } from './lib/constants.mjs'

@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import * as dotenv from 'dotenv-safe'
-import { errorLog } from './cli.mjs'
+import { errorLog } from './console.mjs'
 
 
 dotenv.config()

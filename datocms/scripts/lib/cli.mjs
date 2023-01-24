@@ -1,11 +1,6 @@
-import { argv, exit, stdout } from 'node:process'
-
-
-const DEFAULT_EXIT_CODE = 1
-const ANSI_COLORS = {
-  DEFAULT: '\x1b[0m',
-  RED: '\x1b[31m',
-}
+import { argv, exit } from 'node:process'
+import { errorLog } from './console.mjs'
+import { DEFAULT_EXIT_CODE } from './constants.mjs'
 
 
 export const args = (() => {
@@ -17,19 +12,6 @@ export const args = (() => {
 
 export function stop(code = DEFAULT_EXIT_CODE) {
   exit(code)
-}
-
-export function log(string) {
-  const formattedString = formatString(string, false)
-
-  stdout.write(formattedString)
-}
-
-export function errorLog(string, exitCode = DEFAULT_EXIT_CODE) {
-  const formattedString = formatString(string, true)
-
-  stdout.write(formattedString)
-  stop(exitCode)
 }
 
 
@@ -47,9 +29,3 @@ function normaliseCliArgs(string) {
   return normalisedString
 }
 
-function formatString(string, isError = false) {
-  const prefix = isError ? '[ERROR]' : '[LOG]'
-  const color = isError ? ANSI_COLORS.RED : ANSI_COLORS.DEFAULT
-
-  return `${color}${prefix} ${string}${ANSI_COLORS.DEFAULT}\n`
-}

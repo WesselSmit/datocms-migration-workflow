@@ -1,6 +1,6 @@
 import fetch from 'node-fetch'
 import * as dotenv from 'dotenv-safe'
-import { errorLog } from './cli.mjs'
+import { errorLog } from './console.mjs'
 import loadQuery from './load-query.mjs'
 
 dotenv.config()
