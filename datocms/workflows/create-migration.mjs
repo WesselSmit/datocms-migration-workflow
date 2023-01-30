@@ -5,7 +5,7 @@ import { args } from './lib/cli.mjs'
 import { log, errorLog } from './lib/console.mjs'
 import datoCmd from './lib/dato-cmd.mjs'
 import { getPrimaryEnv, getAppliedMigrationsForEnv } from './lib/dato-helpers.mjs'
-import { TEST_ENV_NAME_SUFFIX, DEFAULT_DATOCMS_CONFIG_PROFILE } from './lib/constants.mjs'
+import { TEST_ENV_NAME_SUFFIX, DATOCMS_CONFIG_PROFILE } from './lib/constants.mjs'
 
 
 dotenv.config()
@@ -32,7 +32,7 @@ try {
 
   if (hasDatocmsConfig) {
     const datocmsConfig = JSON.parse(readFileSync(datocmsConfigPath, 'utf8'))
-    const migrationsConfig = datocmsConfig.profiles[DEFAULT_DATOCMS_CONFIG_PROFILE].migrations
+    const migrationsConfig = datocmsConfig.profiles[DATOCMS_CONFIG_PROFILE].migrations
 
     migrationsDir = migrationsConfig.directory
     migrationsModelApiKey = migrationsConfig.modelApiKey
