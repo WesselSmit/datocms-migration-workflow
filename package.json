@@ -1,18 +1,22 @@
 {
-  "name": "colors",
+  "name": "datocms-migration-workflow",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Wrapper library to automate and simplify the datocms migration workflow",
+  "keywords": [
+    "datocms",
+    "migrations",
+    "workflow"
+  ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/WesselSmit/colors.git"
+    "url": "git+https://github.com/WesselSmit/datocms-migration-workflow.git"
   },
-  "author": "",
-  "license": "ISC",
   "bugs": {
-    "url": "https://github.com/WesselSmit/colors/issues"
+    "url": "https://github.com/WesselSmit/datocms-migration-workflow/issues"
   },
-  "homepage": "https://github.com/WesselSmit/colors#readme",
+  "homepage": "https://github.com/WesselSmit/datocms-migration-workflow#readme",
+  "author": "Wessel Smit",
+  "license": "MIT",
   "scripts": {
     "datocms:create-env": "APP_ROOT=. node datocms/workflows/create-env.mjs",
     "datocms:create-migration": "APP_ROOT=. node datocms/workflows/create-migration.mjs",
