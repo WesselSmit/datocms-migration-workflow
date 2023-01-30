@@ -14,8 +14,8 @@
   },
   "homepage": "https://github.com/WesselSmit/colors#readme",
   "scripts": {
-    "datocms:create-env": "node datocms/workflows/create-env.mjs",
-    "datocms:create-migration": "node datocms/workflows/create-migration.mjs APP_ROOT=.",
+    "datocms:create-env": "APP_ROOT=. node datocms/workflows/create-env.mjs",
+    "datocms:create-migration": "APP_ROOT=. node datocms/workflows/create-migration.mjs",
     "datocms:promote-env": "node datocms/workflows/promote-env.mjs"
   },
   "devDependencies": {
