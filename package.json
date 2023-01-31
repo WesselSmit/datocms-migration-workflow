@@ -22,6 +22,11 @@
     "datocms:create-migration": "APP_ROOT=. node datocms/workflows/create-migration.mjs",
     "datocms:promote-env": "node datocms/workflows/promote-env.mjs"
   },
+  "bin": {
+    "datocms:create-env": "APP_ROOT=. datocms/workflows/create-env.mjs",
+    "datocms:create-migration": "APP_ROOT=. datocms/workflows/create-migration.mjs",
+    "datocms:promote-env": "datocms/workflows/promote-env.mjs"
+  },
   "devDependencies": {
     "@datocms/cli": "^1.0.21",
     "dotenv-safe": "^8.2.0",

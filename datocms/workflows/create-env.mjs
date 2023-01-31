@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { args } from './lib/cli.mjs'
 import { log, errorLog } from './lib/console.mjs'
 import datoCmd from './lib/dato-cmd.mjs'

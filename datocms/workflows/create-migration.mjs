@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { existsSync, unlinkSync, readdirSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import * as dotenv from 'dotenv-safe'
