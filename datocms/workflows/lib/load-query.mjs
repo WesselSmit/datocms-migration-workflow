@@ -10,7 +10,7 @@ const { APP_ROOT } = process.env
 
 
 export default function loadQuery(fileName) {
-  const queryFilePath = resolve(APP_ROOT, 'datocms', 'scripts', 'queries', `${fileName}.gql`)
+  const queryFilePath = resolve(APP_ROOT, 'datocms', 'workflows', 'queries', `${fileName}.gql`)
   const queryFileExists = existsSync(queryFilePath)
 
   if (!queryFileExists) {
