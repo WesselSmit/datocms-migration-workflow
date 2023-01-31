@@ -1,6 +1,6 @@
 {
   "name": "datocms-migration-workflow",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Wrapper library to automate and simplify the datocms migration workflow",
   "keywords": [
     "datocms",
@@ -27,7 +27,7 @@
     "datocms:create-migration": "datocms/workflows/create-migration.mjs",
     "datocms:promote-env": "datocms/workflows/promote-env.mjs"
   },
-  "devDependencies": {
+  "dependencies": {
     "@datocms/cli": "^1.0.21",
     "dotenv-safe": "^8.2.0",
     "node-fetch": "^3.3.0"
