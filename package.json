@@ -23,9 +23,9 @@
     "datocms:promote-env": "node datocms/workflows/promote-env.mjs"
   },
   "bin": {
-    "datocms:create-env": "datocms/workflows/create-env.mjs",
-    "datocms:create-migration": "datocms/workflows/create-migration.mjs",
-    "datocms:promote-env": "datocms/workflows/promote-env.mjs"
+    "create-env": "datocms/workflows/create-env.mjs",
+    "create-migration": "datocms/workflows/create-migration.mjs",
+    "promote-env": "datocms/workflows/promote-env.mjs"
   },
   "dependencies": {
     "@datocms/cli": "^1.0.21",
