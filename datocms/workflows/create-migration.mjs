@@ -45,7 +45,7 @@ try {
 
   const allMigrations = readdirSync(migrationsDir)
   const appliedMigrations = await getAppliedMigrationsForEnv(envName, migrationsModelApiKey)
-  const unAppliedMigrations = allMigrations.filter(migration => !appliedMigrations.includes(migration))
+  const unAppliedMigrations = allMigrations.filter(migration => !appliedMigrations.includes(migration) && migration !== '.gitkeep')
 
   unAppliedMigrations.forEach(migration => {
     const migrationPath = resolve(APP_ROOT, migrationsDir, migration)
