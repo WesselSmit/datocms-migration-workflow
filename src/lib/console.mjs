@@ -22,9 +22,6 @@ export async function promptYesNo(question) {
   const YES_NO_QUESTION = {
     YES_VALUES: ['y', 'yes'],
     NO_VALUES: ['n', 'no'],
-    get ACCEPTABLE_VALUES() {
-      return [...this.YES_VALUES, ...this.NO_VALUES]
-    },
   }
 
   const formattedQuestion = `${question} (y/n)\n`
