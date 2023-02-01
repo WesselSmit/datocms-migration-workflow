@@ -3,19 +3,36 @@
 import { unlinkSync, readdirSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { args } from './lib/cli.mjs'
-import { log, errorLog } from './lib/console.mjs'
+import { log, errorLog, promptYesNo } from './lib/console.mjs'
 import datoCmd from './lib/dato-cmd.mjs'
 import { getPrimaryEnv, getAppliedMigrationsForEnv } from './lib/dato-helpers.mjs'
+import { getCurrentEnvFromState } from './lib/state-helpers.mjs'
 import { APP_ROOT, MIGRATIONS_DIR, MIGRATION_MODEL_API_KEY, TEST_ENV_NAME_SUFFIX } from './lib/constants.mjs'
 
-const [migrationName, envName] = args
+
+const [migrationName, envNameFromCli] = args
+let envName = envNameFromCli
 
 if (!migrationName) {
   errorLog('You must specify a name for the new migration.')
 }
 
-if (!envName) {
-  errorLog('You must specify an existing datocms environment name.')
+if (!envNameFromCli) {
+  const envNameFromState = getCurrentEnvFromState()
+
+  if (envNameFromState) {
+    log(`No datocms environment name specified, but we detected "${envNameFromState}" in your local state (state.json).`)
+    const useEnvNameFromState = await promptYesNo(`Do you want to use "${envNameFromState}" as datocms environment?`)
+
+    if (useEnvNameFromState) {
+      envName = envNameFromState
+      log(`Using "${envNameFromState}" as datocms environment.`)
+    } else {
+      errorLog('Aborting. You must specify an existing datocms environment name.')
+    }
+  } else {
+    errorLog('Aborting. You must specify an existing datocms environment name.')
+  }
 }
 
 try {
