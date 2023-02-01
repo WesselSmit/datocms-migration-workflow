@@ -17,7 +17,8 @@ export function errorLog(string, exitCode = DEFAULT_EXIT_CODE) {
   stop(exitCode)
 }
 
-export async function prompt(question, { isYesNoQuestion = false }) {
+// todo ideally promptYesNo would re-prompt if answer is not a y/n answer
+export async function promptYesNo(question) {
   const YES_NO_QUESTION = {
     YES_VALUES: ['y', 'yes'],
     NO_VALUES: ['n', 'no'],
@@ -26,8 +27,7 @@ export async function prompt(question, { isYesNoQuestion = false }) {
     },
   }
 
-  const questionOptions = isYesNoQuestion ? '(y/n)' : ''
-  const formattedQuestion = `${question} ${questionOptions}\n`
+  const formattedQuestion = `${question} (y/n)\n`
   const rl = createInterface({
     input: stdin,
     output: stdout,
@@ -38,23 +38,15 @@ export async function prompt(question, { isYesNoQuestion = false }) {
       rl.close()
 
       const normalisedAnswer = answer
-      .toLowerCase()
-      .trim()
-      const answeredWithYesOrNo = YES_NO_QUESTION.ACCEPTABLE_VALUES.includes(normalisedAnswer)
+        .toLowerCase()
+        .trim()
 
-      if (isYesNoQuestion) {
-        if (!answeredWithYesOrNo) {
-          const response = await prompt(question, true)
-          resolve(response)
-        } else {
-          if (YES_NO_QUESTION.YES_VALUES.includes(normalisedAnswer)) {
-            resolve(true)
-          } else if (YES_NO_QUESTION.NO_VALUES.includes(normalisedAnswer)) {
-            resolve(false)
-          }
-        }
+      if (YES_NO_QUESTION.YES_VALUES.includes(normalisedAnswer)) {
+        resolve(true)
+      } else if (YES_NO_QUESTION.NO_VALUES.includes(normalisedAnswer)) {
+        resolve(false)
       } else {
-        resolve(normalisedAnswer)
+        resolve(null)
       }
     })
   })

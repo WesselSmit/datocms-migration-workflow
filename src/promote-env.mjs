@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { stop } from './lib/cli.mjs'
-import { log, errorLog, prompt } from './lib/console.mjs'
+import { log, errorLog, promptYesNo } from './lib/console.mjs'
 import datoCmd from './lib/dato-cmd.mjs'
 import { getPrimaryEnv, createNewPrimaryEnvId } from './lib/dato-helpers.mjs'
 
@@ -17,7 +17,7 @@ try {
   log(`Check your changes one last time on the "${newPrimaryEnvId}" environment.`)
   log(`When you have checked the changes, confirm whether you want to continue the promotion.`)
 
-  const continuePromotion = await prompt('Do you want to continue the promotion?', { isYesNoQuestion: true })
+  const continuePromotion = await promptYesNo('Do you want to continue the promotion?')
 
   if (!continuePromotion) {
     await datoCmd(`npx datocms environments:destroy ${newPrimaryEnvId}`)
