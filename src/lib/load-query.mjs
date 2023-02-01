@@ -1,12 +1,7 @@
 import { existsSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
-import * as dotenv from 'dotenv-safe'
 import { errorLog } from './console.mjs'
-
-
-dotenv.config()
-
-const { APP_ROOT } = process.env
+import { APP_ROOT } from './constants.mjs'
 
 
 export default function loadQuery(fileName) {

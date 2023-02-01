@@ -18,8 +18,8 @@
   "author": "Wessel Smit",
   "license": "MIT",
   "scripts": {
-    "create-env": "APP_ROOT=. node src/create-env.mjs",
-    "create-migration": "APP_ROOT=. node src/create-migration.mjs",
+    "create-env": "node src/create-env.mjs",
+    "create-migration": "node src/create-migration.mjs",
     "promote-env": "node src/promote-env.mjs"
   },
   "bin": {

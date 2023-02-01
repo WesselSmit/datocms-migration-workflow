@@ -1,3 +1,12 @@
+import { dirname, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
+
+
+const currentFilename = fileURLToPath(import.meta.url)
+const pathToRoot = resolve(currentFilename, '../../')
+
+
+export const APP_ROOT = dirname(pathToRoot)
 export const DEFAULT_EXIT_CODE = 1
 export const MIGRATIONS_DIR = './migrations'
 export const MIGRATION_MODEL_API_KEY = 'schema_migration'

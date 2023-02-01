@@ -2,19 +2,13 @@
 
 import { unlinkSync, readdirSync } from 'node:fs'
 import { resolve } from 'node:path'
-import * as dotenv from 'dotenv-safe'
 import { args } from './lib/cli.mjs'
 import { log, errorLog } from './lib/console.mjs'
 import datoCmd from './lib/dato-cmd.mjs'
 import { getPrimaryEnv, getAppliedMigrationsForEnv } from './lib/dato-helpers.mjs'
-import { MIGRATIONS_DIR, MIGRATION_MODEL_API_KEY, TEST_ENV_NAME_SUFFIX } from './lib/constants.mjs'
+import { APP_ROOT, MIGRATIONS_DIR, MIGRATION_MODEL_API_KEY, TEST_ENV_NAME_SUFFIX } from './lib/constants.mjs'
 
-
-dotenv.config()
-
-const { APP_ROOT } = process.env
 const [migrationName, envName] = args
-
 
 if (!migrationName) {
   errorLog('You must specify a name for the new migration.')

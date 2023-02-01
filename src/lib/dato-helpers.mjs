@@ -3,6 +3,7 @@ import * as dotenv from 'dotenv-safe'
 import { errorLog } from './console.mjs'
 import loadQuery from './load-query.mjs'
 
+
 dotenv.config()
 
 const { DATOCMS_API_TOKEN } = process.env

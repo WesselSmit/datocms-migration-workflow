@@ -14,6 +14,7 @@ try {
   await datoCmd(`npx datocms maintenance:on`)
   await datoCmd(`npx datocms migrations:run --source=${newPrimaryEnvId} --in-place`)
 
+  log(`Created "${newPrimaryEnvId}" environment with all migrations applied.`)
   log(`Check your changes one last time on the "${newPrimaryEnvId}" environment.`)
   log(`When you have checked the changes, confirm whether you want to continue the promotion.`)
 
