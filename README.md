@@ -109,4 +109,5 @@ There you can create a pull request and leave your faith in the hands of a revie
 ## Roadmap
 Things I would like to add in the future:
 - Currently the dev is responsible for making sure there is a `migrations/.gitkeep` directory, this should be taken care of automatically in either a post-install script or a check before the npm/bin scripts are executed.
-- Currently the migrations directory and the migration modelApiKey are hardcoded in the codebase, devs should be able to create a `datocms.config.json` file in the root of their project and the migrations directory and the migration modelApiKey in that file should be used instead.
+- Currently the migrations directory and the migration modelApiKey are hardcoded in the codebase, devs should be able to create a `datocms.config.json` file in the root of their project and the migrations directory and the migration modelApiKey in that file should be used instead. You can than also use the datocms cma api to create a schema_migration model (or use any other name as specigied specified in the `datocms.config.json`) so the dev does not have to do this manually.
+- ErrorLog's currently are red, normal log's should be blue and YesNo prompts should be green.
