@@ -24,42 +24,17 @@ Migrations are very powerful and can help you in many ways, but they are not wit
 That's why this library aims to simplify the auto-generation of datocms migrations for you.
 
 ## Setup
-
-### Datocms-cli config
-Adding a `datocms.config.json` to the root of your project is recommended, this file is used to configure the [`@datocms/cli`](https://www.npmjs.com/package/@datocms/cli) package which is used to power this library.
-This wrapper library respects your preferences as specified in `datocms.config.json`, for more info on how to configure your `datocms.config.json` see the [official datocms documentation](https://www.datocms.com/docs/scripting-migrations/installing-the-cli).
-
-An example of a `datocms.config.json` can look like this:
-```json
-{
-  "profiles": {
-    "default": {
-      "logLevel": "BODY",
-      "migrations": {
-        "directory": "./datocms/migrations",
-        "modelApiKey": "schema_migration"
-      }
-    }
-  }
-}
-```
-
-> Having a `datocms.config.json` is not required, but it is recommended and this guide assumes you have one.
-
 ### Folder structure
-Create a `datocms/migrations/` directory in the root of your project to store the migration files.
+Create a `migrations/.gitkeep` file in the root of your project to make sure there is a place for the migrations to be stored.
 
 The migrations files should be included in your version control system, do not gitignore them!
-
-> You can use a different name instead of `datocms/migrations/` but you'll have to manually make sure the `migrations.directory` in your `datocms.config.json` is set to the correct path.
+The `.gitkeep` is used to ensure the directory is included in version control system even if there are no migration files yet.
 
 ### CMS structure
 This library makes a few assumptions about the structure of you datocms instance, it is recommended to follow the following steps:
 1. Create a new blank datocms instance.
-2. Create a model (you can enter any model name you like) with `schema_migration` as the `Field ID`_*_.
+2. Create a model (you can enter any model name you like) with `schema_migration` as the `Field ID`.
 3. Add a field named "Migrations file name" with the type `Single-line string` and make it required under "Validations".
-
-_* this name should be the same as specified in `datocms.config.json` under `migrations.modelApiKey`._
 
 ### API token
 This library requires access to both the content delivery and management api.
@@ -79,22 +54,21 @@ The `FEATURE` environment is the environment you will use to make changes to the
 
 
 ```sh
-$ npm run datocms:create-env "ENVIRONMENT_NAME"
+$ npm run create-env "ENVIRONMENT_NAME"
 ```
 
 Switch to the newly created `FEATURE` environment in datocms.
 
-You are now all set-up to make changes in the cms, when you're done making changes you can continue to "creating-a-new-migration" to learn about generating migration files from your changes.
+You are now all set-up to make changes in the cms, when you're done making changes you can continue to ["Creating a new migration"](#creating-a-new-migration) to learn about generating migration files from your changes.
 
 ### Creating a new migration
 Now that you've made changes to the cms structure, it's time to create a migration file.
 
 ```sh
-$ npm run datocms:create-migration "MIGRATION_NAME" "ENVIRONMENT_NAME"
+$ npm run create-migration "MIGRATION_NAME" "ENVIRONMENT_NAME"
 ```
 
-This will create a new migration file in the migrations directory as specified in the `datocms.config.json`, otherwise it defaults to `./migrations`.
-This will also delete and recreate the `FEATURE-test` datocms environment to ensure it is up-to-date with the latest cms changes.
+This will create a new migration file in the migrations directory, it also deletes and recreates the `FEATURE-test` datocms environment to ensure it is up-to-date with the latest cms changes.
 
 > If you already had a pending migration file (migration that has not yet been applied to the primary environment), it'll be deleted automatically as the migration changes will be included in the newly generated migration.
 
@@ -111,7 +85,7 @@ Promoting an environment is a safe workflow that ensures the changes are applied
 If something goes wrong dureing the promotion you can always revert back to the previous primary environment.
 
 ```sh
-$ npm run datocms:promote-env
+$ npm run promote-env
 ```
 
 It basically does the following:
@@ -131,3 +105,8 @@ When done, you can simply switch to the new primary environment in datocms.
 
 Now it is time to commit everything to git and push it to your remote repository.
 There you can create a pull request and leave your faith in the hands of a reviewer who now can also review the changes you made to the cms structure.
+
+## Roadmap
+Things I would like to add in the future:
+- Currently the dev is responsible for making sure there is a `migrations/.gitkeep` directory, this should be taken care of automatically in either a post-install script or a check before the npm/bin scripts are executed.
+- Currently the migrations directory and the migration modelApiKey are hardcoded in the codebase, devs should be able to create a `datocms.config.json` file in the root of their project and the migrations directory and the migration modelApiKey in that file should be used instead.

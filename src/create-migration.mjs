@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
-import { existsSync, unlinkSync, readdirSync, readFileSync } from 'node:fs'
+import { unlinkSync, readdirSync } from 'node:fs'
 import { resolve } from 'node:path'
 import * as dotenv from 'dotenv-safe'
 import { args } from './lib/cli.mjs'
 import { log, errorLog } from './lib/console.mjs'
 import datoCmd from './lib/dato-cmd.mjs'
 import { getPrimaryEnv, getAppliedMigrationsForEnv } from './lib/dato-helpers.mjs'
-import { TEST_ENV_NAME_SUFFIX, DATOCMS_CONFIG_PROFILE } from './lib/constants.mjs'
+import { MIGRATIONS_DIR, MIGRATION_MODEL_API_KEY, TEST_ENV_NAME_SUFFIX } from './lib/constants.mjs'
 
 
 dotenv.config()
@@ -25,30 +25,15 @@ if (!envName) {
 }
 
 try {
-  const datocmsConfigPath = resolve(APP_ROOT, 'datocms.config.json')
-  const hasDatocmsConfig = existsSync(datocmsConfigPath)
   const { id: primaryEnvId } = await getPrimaryEnv()
   const testEnvName = `${envName}${TEST_ENV_NAME_SUFFIX}`
-  let migrationsDir
-  let migrationsModelApiKey
 
-  if (hasDatocmsConfig) {
-    const datocmsConfig = JSON.parse(readFileSync(datocmsConfigPath, 'utf8'))
-    const migrationsConfig = datocmsConfig.profiles[DATOCMS_CONFIG_PROFILE].migrations
-
-    migrationsDir = migrationsConfig.directory
-    migrationsModelApiKey = migrationsConfig.modelApiKey
-  } else {
-    migrationsDir = './migrations'
-    migrationsModelApiKey = 'schema_migration'
-  }
-
-  const allMigrations = readdirSync(migrationsDir)
-  const appliedMigrations = await getAppliedMigrationsForEnv(envName, migrationsModelApiKey)
+  const allMigrations = readdirSync(MIGRATIONS_DIR)
+  const appliedMigrations = await getAppliedMigrationsForEnv(envName, MIGRATION_MODEL_API_KEY)
   const unAppliedMigrations = allMigrations.filter(migration => !appliedMigrations.includes(migration) && migration !== '.gitkeep')
 
   unAppliedMigrations.forEach(migration => {
-    const migrationPath = resolve(APP_ROOT, migrationsDir, migration)
+    const migrationPath = resolve(APP_ROOT, MIGRATIONS_DIR, migration)
     unlinkSync(migrationPath)
     log(`Deleted the outdated "${migrationPath}".`)
   })
