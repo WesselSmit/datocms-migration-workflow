@@ -3,7 +3,7 @@
     "default": {
       "logLevel": "BODY",
       "migrations": {
-        "directory": "./datocms/migrations",
+        "directory": "migrations",
         "modelApiKey": "schema_migration"
       }
     }

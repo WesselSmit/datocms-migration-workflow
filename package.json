@@ -18,14 +18,14 @@
   "author": "Wessel Smit",
   "license": "MIT",
   "scripts": {
-    "datocms:create-env": "APP_ROOT=. node datocms/workflows/create-env.mjs",
-    "datocms:create-migration": "APP_ROOT=. node datocms/workflows/create-migration.mjs",
-    "datocms:promote-env": "node datocms/workflows/promote-env.mjs"
+    "datocms:create-env": "APP_ROOT=. node src/create-env.mjs",
+    "datocms:create-migration": "APP_ROOT=. node src/create-migration.mjs",
+    "datocms:promote-env": "node src/promote-env.mjs"
   },
   "bin": {
-    "create-env": "datocms/workflows/create-env.mjs",
-    "create-migration": "datocms/workflows/create-migration.mjs",
-    "promote-env": "datocms/workflows/promote-env.mjs"
+    "create-env": "src/create-env.mjs",
+    "create-migration": "src/create-migration.mjs",
+    "promote-env": "src/promote-env.mjs"
   },
   "dependencies": {
     "@datocms/cli": "^1.0.21",
