@@ -18,9 +18,9 @@
   "author": "Wessel Smit",
   "license": "MIT",
   "scripts": {
-    "datocms:create-env": "APP_ROOT=. node src/create-env.mjs",
-    "datocms:create-migration": "APP_ROOT=. node src/create-migration.mjs",
-    "datocms:promote-env": "node src/promote-env.mjs"
+    "create-env": "APP_ROOT=. node src/create-env.mjs",
+    "create-migration": "APP_ROOT=. node src/create-migration.mjs",
+    "promote-env": "node src/promote-env.mjs"
   },
   "bin": {
     "create-env": "src/create-env.mjs",
