@@ -6,8 +6,14 @@ import { args } from './lib/cli.mjs'
 import { log, errorLog, promptYesNo } from './lib/console.mjs'
 import datoCmd from './lib/dato-cmd.mjs'
 import { getPrimaryEnv, getAppliedMigrationsForEnv } from './lib/dato-helpers.mjs'
-import { getCurrentEnvFromState } from './lib/state-helpers.mjs'
-import { APP_ROOT, MIGRATIONS_DIR, MIGRATION_MODEL_API_KEY, TEST_ENV_NAME_SUFFIX } from './lib/constants.mjs'
+import { getState } from './lib/state-helpers.mjs'
+import {
+  APP_ROOT,
+  STATE_FILE_NAME,
+  MIGRATIONS_DIR,
+  MIGRATION_MODEL_API_KEY,
+  TEST_ENV_NAME_SUFFIX
+} from './lib/constants.mjs'
 
 
 const [migrationName, envNameFromCli] = args
@@ -18,10 +24,10 @@ if (!migrationName) {
 }
 
 if (!envNameFromCli) {
-  const envNameFromState = getCurrentEnvFromState()
+  const { currentEnv: envNameFromState } = await getState()
 
   if (envNameFromState) {
-    log(`No datocms environment name specified, but we detected "${envNameFromState}" in your local state (state.json).`)
+    log(`No datocms environment name specified, but we detected "${envNameFromState}" in your local state (${STATE_FILE_NAME}).`)
     const useEnvNameFromState = await promptYesNo(`Do you want to use "${envNameFromState}" as datocms environment?`)
 
     if (useEnvNameFromState) {

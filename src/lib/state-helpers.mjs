@@ -1,38 +1,39 @@
-import { existsSync, readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, writeFileSync } from 'node:fs'
 import { resolve } from 'node:path'
-import { APP_ROOT } from './constants.mjs'
+import { APP_ROOT, STATE_FILE_NAME } from './constants.mjs'
 
 
-const STATE_PATH = resolve(APP_ROOT, 'state.json')
+const INITIAL_STATE = { currentEnv: null }
+const PATH_TO_STATE_FILE = resolve(APP_ROOT, STATE_FILE_NAME)
 
 
-export function getCurrentEnvFromState() {
-  if (!existsSync(STATE_PATH)) {
-    initState()
+export async function getState() {
+  if (!existsSync(PATH_TO_STATE_FILE)) {
+    return initState()
+  } else {
+    const state = await import(PATH_TO_STATE_FILE)
+    return state.default
   }
-
-  const { currentEnv } = JSON.parse(readFileSync(STATE_PATH, 'utf8'))
-
-  return currentEnv
 }
 
-export function setCurrentEnvInState(newEnv) {
-  if (!existsSync(STATE_PATH)) {
+export function setState(newState) {
+  if (!existsSync(PATH_TO_STATE_FILE)) {
     initState()
   }
 
-  const newState = { currentEnv: newEnv }
+  writeState(newState)
 
-  writeFileSync(STATE_PATH, JSON.stringify(newState, null, 2), 'utf8')
-
-  return newEnv
+  return newState
 }
 
 
 function initState() {
-  const initialState = { currentEnv: null }
+  writeState(INITIAL_STATE)
 
-  writeFileSync(STATE_PATH, JSON.stringify(initialState, null, 2), 'utf8')
+  return INITIAL_STATE
+}
 
-  return initialState
+function writeState(state) {
+  const stateJsString = `export default ${JSON.stringify(state, null, 2)}`
+  writeFileSync(PATH_TO_STATE_FILE, stateJsString, 'utf8')
 }
