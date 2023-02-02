@@ -3,7 +3,7 @@
 import { unlinkSync, readdirSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { args } from './lib/cli.mjs'
-import { log, errorLog, promptYesNo } from './lib/console.mjs'
+import { log, errorLog } from './lib/console.mjs'
 import datoCmd from './lib/dato-cmd.mjs'
 import { getPrimaryEnv, getAppliedMigrationsForEnv } from './lib/dato-env.mjs'
 import { getState } from './lib/state-helpers.mjs'
@@ -28,14 +28,8 @@ if (!envNameFromCli) {
 
   if (envNameFromState) {
     log(`No datocms environment name specified, but we detected "${envNameFromState}" in your local state (${STATE_FILE_NAME}).`)
-    const useEnvNameFromState = await promptYesNo(`Do you want to use "${envNameFromState}" as datocms environment?`)
-
-    if (useEnvNameFromState) {
-      envName = envNameFromState
-      log(`Using "${envNameFromState}" as datocms environment.`)
-    } else {
-      errorLog('Aborting. You must specify an existing datocms environment name.')
-    }
+    log(`Using "${envNameFromState}" as datocms environment.`)
+    envName = envNameFromState
   } else {
     errorLog('Aborting. You must specify an existing datocms environment name.')
   }
