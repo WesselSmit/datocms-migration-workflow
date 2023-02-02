@@ -1,5 +1,11 @@
+import * as dotenv from 'dotenv-safe'
 import { datoSiteRequest } from './dato-request.mjs'
 import loadQuery from './load-query.mjs'
+
+
+dotenv.config()
+
+const { DATOCMS_API_TOKEN } = process.env
 
 
 export async function getAppliedMigrationsForEnv(env, migrationsModelApiKey) {
@@ -8,7 +14,10 @@ export async function getAppliedMigrationsForEnv(env, migrationsModelApiKey) {
 
   const { allSchemaMigrations } = await datoContentRequest(query, {
     url,
-    fieldName: migrationsModelApiKey
+    fieldName: migrationsModelApiKey,
+    headers: {
+      Authorization: `Bearer ${DATOCMS_API_TOKEN}`
+    }
   })
   const migrationNames = allSchemaMigrations.map(migration => migration.name)
 

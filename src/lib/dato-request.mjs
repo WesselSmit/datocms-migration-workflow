@@ -9,7 +9,6 @@ const { DATOCMS_API_TOKEN } = process.env
 const DEFAULT_HEADERS = {
   'Content-Type': 'application/json',
   Accept: 'application/json',
-  Authorization: `Bearer ${DATOCMS_API_TOKEN}`,
 }
 
 
@@ -20,6 +19,7 @@ export async function datoSiteRequest(endpoint) {
       headers: {
         ...DEFAULT_HEADERS,
         'X-Api-Version': '3',
+        Authorization: `Bearer ${DATOCMS_API_TOKEN}`,
       },
     })
     const { data } = await res.json()
@@ -30,16 +30,27 @@ export async function datoSiteRequest(endpoint) {
   }
 }
 
-export async function datoContentRequest(query, {
-  url = 'https://graphql.datocms.com/',
-  vars = {},
-  fieldName,
-}) {
+export async function datoContentRequest(query, optionsFromArgs) {
+  const DEFAULT_OPTIONS = {
+    url: 'https://graphql.datocms.com/',
+    vars: {},
+    fieldName: '',
+  }
+
+  const options = {
+    ...DEFAULT_OPTIONS,
+    ...optionsFromArgs,
+    headers: {
+      ...DEFAULT_HEADERS,
+      ...(optionsFromArgs?.headers && { ...optionsFromArgs.headers }),
+    }
+  }
+
   async function getContent({ variables }) {
     try {
-      const res = await fetch(url, {
+      const res = await fetch(options.url, {
         method: 'POST',
-        headers: DEFAULT_HEADERS,
+        headers: options.headers,
         body: JSON.stringify({
           query,
           variables,
@@ -55,33 +66,33 @@ export async function datoContentRequest(query, {
   // TODO while() can be rewritten using a function that calls itself recursively (for this you'll need to revert the 'if' statement that has the 'break' statement [then in the reverted 'if' statement you van replace the 'break' statement with the recursive call])
   // TODO introduce a check that, before a fetch, check what vars + which fieldName are passen and then (using a stirng operator) check if the query actually contains the passed vars/fieldName. If not, let the dev/user know they're passing the vars/fieldName to the query but that the query does not contain them.
 
-  if (fieldName) {
-    let data = { [fieldName]: [] }
+  if (options.fieldName) {
+    let data = { [options.fieldName]: [] }
 
     while (true) {
       const newData = await getContent({
         query,
         variables: {
-          ...vars,
-          skip: data[fieldName].length || 0,
+          ...options.vars,
+          skip: data[options.fieldName].length || 0,
         },
       })
 
       Object
         .keys(newData)
         .forEach(key => {
-          if (key !== fieldName) {
+          if (key !== options.fieldName) {
             data[key] = newData[key]
           }
         })
 
-      if (!newData[fieldName]?.length) {
+      if (!newData[options.fieldName]?.length) {
         break
       }
 
-      data[fieldName] = [
-        ...data[fieldName],
-        ...newData[fieldName],
+      data[options.fieldName] = [
+        ...data[options.fieldName],
+        ...newData[options.fieldName],
       ]
     }
 
@@ -89,7 +100,7 @@ export async function datoContentRequest(query, {
   } else {
     return await getContent({
       query,
-      variables: vars
+      variables: options.vars
     })
   }
 }
