@@ -5,7 +5,7 @@ import { resolve } from 'node:path'
 import { args } from './lib/cli.mjs'
 import { log, errorLog, promptYesNo } from './lib/console.mjs'
 import datoCmd from './lib/dato-cmd.mjs'
-import { getPrimaryEnv, getAppliedMigrationsForEnv } from './lib/dato-helpers.mjs'
+import { getPrimaryEnv, getAppliedMigrationsForEnv } from './lib/dato-env.mjs'
 import { getState } from './lib/state-helpers.mjs'
 import {
   APP_ROOT,

@@ -3,7 +3,7 @@
 import { stop } from './lib/cli.mjs'
 import { log, errorLog, promptYesNo } from './lib/console.mjs'
 import datoCmd from './lib/dato-cmd.mjs'
-import { getPrimaryEnv, createNewPrimaryEnvId } from './lib/dato-helpers.mjs'
+import { getPrimaryEnv, createNewPrimaryEnvId } from './lib/dato-env.mjs'
 
 
 try {

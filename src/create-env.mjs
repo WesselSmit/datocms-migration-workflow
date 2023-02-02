@@ -3,7 +3,7 @@
 import { args } from './lib/cli.mjs'
 import { log, errorLog } from './lib/console.mjs'
 import datoCmd from './lib/dato-cmd.mjs'
-import { getPrimaryEnv } from './lib/dato-helpers.mjs'
+import { getPrimaryEnv } from './lib/dato-env.mjs'
 import { setState } from './lib/state-helpers.mjs'
 import { TEST_ENV_NAME_SUFFIX } from './lib/constants.mjs'
 

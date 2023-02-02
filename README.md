@@ -48,13 +48,39 @@ Assuming you have a datocms instance that is ready to be used (also see [Setup s
 The idea is to use a separate datocms environment for each feature (just like you do in git for each feature).
 In the following steps we'll use `FEATURE` to represent your feature environment, but if you make an environment for a component (let's say a hero component), we recommend naming your environment "hero".
 
+### Commands
+As mentioned the entire workflow constists of 3 commands.
+You can run the commands by either:
+- invoking them using `npx` (recommended)
+- installing the package globally and invoking them using `datocms-migration-workflow`
+
+
+This documentation operates on the assumption you'll use `npx` as recommended, so all examples will use this approach.
+
+> Using `npx` makes it possible to add the commands as npm scripts to your package.json and allows you to namespace the commands.
+E.g.
+
+
+```json
+# package.json
+{
+  "scripts": {
+    "datocms:create-env": "npx create-env",
+    "datocms:create-migration": "npx create-migration",
+    "datocms:promote-env": "npx promote-env"
+  }
+}
+```
+
+This can help avoid naming conflicts if you are using migrations or environments for something else aswell (e.g. databases).
+
 ### Creating a new environment
 This will create 2 new datocms environments; one called `FEATURE` and one called `FEATURE-test`.
 The `FEATURE` environment is the environment you will use to make changes to the cms, the `FEATURE-test` environment is used later on to test and verify the changes you made.
 
 
 ```sh
-$ npm run create-env "ENVIRONMENT_NAME"
+$ npx create-env "ENVIRONMENT_NAME"
 ```
 
 Switch to the newly created `FEATURE` environment in datocms.
@@ -65,7 +91,7 @@ You are now all set-up to make changes in the cms, when you're done making chang
 Now that you've made changes to the cms structure, it's time to create a migration file.
 
 ```sh
-$ npm run create-migration "MIGRATION_NAME" "ENVIRONMENT_NAME"
+$ npx create-migration "MIGRATION_NAME" "ENVIRONMENT_NAME"
 ```
 
 This will create a new migration file in the migrations directory, it also deletes and recreates the `FEATURE-test` datocms environment to ensure it is up-to-date with the latest cms changes.
@@ -74,7 +100,7 @@ This will create a new migration file in the migrations directory, it also delet
 
 Now switch to the `FEATURE-test` environment in datocms and verify that everything is working as expected (you might need to enter some test content in newly created models and fields).
 
-If something isn't working as desired or you realise you need to make more changes, you can switch back to the `FEATURE` environment and continue making changes. When done you can repeat [this "Creating a new migration"](#creating-a-new-migration) step again to overwrite the previously generated migration file.
+If something isn't working as desired or you realise you need to make more changes, you can switch back to the `FEATURE` environment and continue making changes. When done you can repeat the ["Creating a new migration"](#creating-a-new-migration) step again to overwrite the previously generated migration file.
 
 If everything is working as expected and the changes are ready to be applied to the primary environment, you can continue to ["Promoting-an-environment"](#promoting-an-environment
 ).
@@ -85,7 +111,7 @@ Promoting an environment is a safe workflow that ensures the changes are applied
 If something goes wrong dureing the promotion you can always revert back to the previous primary environment.
 
 ```sh
-$ npm run promote-env
+$ npx promote-env
 ```
 
 It basically does the following:
