@@ -17,11 +17,7 @@
   "homepage": "https://github.com/WesselSmit/datocms-migration-workflow#readme",
   "author": "Wessel Smit",
   "license": "MIT",
-  "scripts": {
-    "create-env": "node src/create-env.mjs",
-    "create-migration": "node src/create-migration.mjs",
-    "promote-env": "node src/promote-env.mjs"
-  },
+  "main": "src/exports/dato-fetch.mjs",
   "bin": {
     "create-env": "src/create-env.mjs",
     "create-migration": "src/create-migration.mjs",

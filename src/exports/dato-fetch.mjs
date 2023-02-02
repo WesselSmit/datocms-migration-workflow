@@ -1,6 +1,7 @@
-import { datoContentRequest } from '../src/lib/dato-request.mjs'
-import { getState } from '../src/lib/state-helpers.mjs'
-import { STATE_FILE_NAME } from '../src/lib/constants.mjs'
+import { datoContentRequest } from '../lib/dato-request.mjs'
+import { getState } from '../lib/state-helpers.mjs'
+import { STATE_FILE_NAME } from '../lib/constants.mjs'
+
 
 export default async function datoFetch(query, options, useEnvFromState = true) {
   if (!query) {
