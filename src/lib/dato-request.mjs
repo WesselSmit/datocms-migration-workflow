@@ -34,7 +34,7 @@ export async function datoContentRequest(query, optionsFromArgs) {
   const DEFAULT_OPTIONS = {
     url: 'https://graphql.datocms.com/',
     vars: {},
-    fieldName: '',
+    paginatedFieldName: '',
   }
 
   const options = {
@@ -64,35 +64,35 @@ export async function datoContentRequest(query, optionsFromArgs) {
     }
   }
   // TODO while() can be rewritten using a function that calls itself recursively (for this you'll need to revert the 'if' statement that has the 'break' statement [then in the reverted 'if' statement you van replace the 'break' statement with the recursive call])
-  // TODO introduce a check that, before a fetch, check what vars + which fieldName are passen and then (using a stirng operator) check if the query actually contains the passed vars/fieldName. If not, let the dev/user know they're passing the vars/fieldName to the query but that the query does not contain them.
+  // TODO introduce a check that, before a fetch, check what vars + which paginatedFieldName are passen and then (using a stirng operator) check if the query actually contains the passed vars/paginatedFieldName. If not, let the dev/user know they're passing the vars/paginatedFieldName to the query but that the query does not contain them.
 
-  if (options.fieldName) {
-    let data = { [options.fieldName]: [] }
+  if (options.paginatedFieldName) {
+    let data = { [options.paginatedFieldName]: [] }
 
     while (true) {
       const newData = await getContent({
         query,
         variables: {
           ...options.vars,
-          skip: data[options.fieldName].length || 0,
+          skip: data[options.paginatedFieldName].length || 0,
         },
       })
 
       Object
         .keys(newData)
         .forEach(key => {
-          if (key !== options.fieldName) {
+          if (key !== options.paginatedFieldName) {
             data[key] = newData[key]
           }
         })
 
-      if (!newData[options.fieldName]?.length) {
+      if (!newData[options.paginatedFieldName]?.length) {
         break
       }
 
-      data[options.fieldName] = [
-        ...data[options.fieldName],
-        ...newData[options.fieldName],
+      data[options.paginatedFieldName] = [
+        ...data[options.paginatedFieldName],
+        ...newData[options.paginatedFieldName],
       ]
     }
 

@@ -14,7 +14,7 @@ export async function getAppliedMigrationsForEnv(env, migrationsModelApiKey) {
 
   const { allSchemaMigrations } = await datoContentRequest(query, {
     url,
-    fieldName: migrationsModelApiKey,
+    paginatedFieldName: migrationsModelApiKey,
     headers: {
       Authorization: `Bearer ${DATOCMS_API_TOKEN}`
     }

@@ -8,7 +8,9 @@ export default async function datoFetch(query, options, useEnvFromState = true) 
     throw new Error('Please pass a query to the datoFetch function.')
   }
 
-  if (useEnvFromState) {
+  if (options.env) {
+    options.url = `https://graphql.datocms.com/environments/${options.env}`
+  } else if (useEnvFromState) {
     const { currentEnv: envFromState } = await getState()
 
     if (envFromState) {
