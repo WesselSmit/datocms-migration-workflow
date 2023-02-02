@@ -4,7 +4,7 @@ import { args } from './lib/cli.mjs'
 import { log, errorLog } from './lib/console.mjs'
 import datoCmd from './lib/dato-cmd.mjs'
 import { getPrimaryEnv } from './lib/dato-helpers.mjs'
-import { setCurrentEnvInState } from './lib/state-helpers.mjs'
+import { setState } from './lib/state-helpers.mjs'
 import { TEST_ENV_NAME_SUFFIX } from './lib/constants.mjs'
 
 
@@ -24,7 +24,7 @@ try {
   await datoCmd(`npx datocms environments:fork ${primaryEnvId} ${testEnvName}`)
   log(`Created a new datocms test environment called "${testEnvName}".`)
 
-  setCurrentEnvInState(envName)
+  setState({ currentEnv: envName })
 } catch(error) {
   errorLog(error)
 }
