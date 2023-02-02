@@ -40,6 +40,11 @@ This library makes a few assumptions about the structure of you datocms instance
 This library requires access to both the content delivery and management api.
 You can either create a new api token with those permissions or use the standard "Full-access API Token" token.
 
+### Ignoring files
+You `.gitignore` should include `datocms-mw-state.mjs` which is used to persist state this package uses to make it more convenient to use.
+
+> the generated migration files should be included in the version control system, do not gitignore them!
+
 ## Workflow
 You can read up on the recommended workflow, that this wrapper library implements, in the [official datocms documentation](https://www.datocms.com/docs/scripting-migrations/safe-iterations-using-environments). This library has simplified these steps into 3 commands.
 
@@ -93,6 +98,8 @@ Now that you've made changes to the cms structure, it's time to create a migrati
 ```sh
 $ npx create-migration "MIGRATION_NAME" "ENVIRONMENT_NAME"
 ```
+
+> You can also leave out "ENVIRONMENT_NAME" and the `currentEnv` as stored in `datocms-mw-state.mjs` will be used instead.
 
 This will create a new migration file in the migrations directory, it also deletes and recreates the `FEATURE-test` datocms environment to ensure it is up-to-date with the latest cms changes.
 
