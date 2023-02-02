@@ -62,7 +62,7 @@ E.g.
 
 
 ```json
-# package.json
+// package.json
 {
   "scripts": {
     "datocms:create-env": "npx create-env",
