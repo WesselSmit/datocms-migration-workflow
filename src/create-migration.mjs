@@ -7,8 +7,8 @@ import { log, errorLog } from './lib/console.mjs'
 import datoCmd from './lib/dato-cmd.mjs'
 import { getPrimaryEnv, getAppliedMigrationsForEnv } from './lib/dato-env.mjs'
 import { getState } from './lib/state-helpers.mjs'
+import { APP_ROOT  } from './lib/finder.mjs'
 import {
-  APP_ROOT,
   STATE_FILE_NAME,
   MIGRATIONS_DIR,
   MIGRATION_MODEL_API_KEY,

@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { errorLog } from './console.mjs'
-import { APP_ROOT } from './constants.mjs'
+import { APP_ROOT  } from './finder.mjs'
 
 
 export default function loadQuery(fileName) {

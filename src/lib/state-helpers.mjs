@@ -1,13 +1,19 @@
 import { existsSync, writeFileSync } from 'node:fs'
-import { DEPENDENT_APP_ROOT, STATE_FILE_NAME } from './constants.mjs'
+import { STATE_FILE_NAME } from './constants.mjs'
+import { DEPENDENT_APP_ROOT } from './finder.mjs'
 
 
 const INITIAL_STATE = { currentEnv: null }
 
+
 import fs from 'node:fs'
+
+
 export async function getState() {
-  console.log('---> STATE_FILE_NAME:', STATE_FILE_NAME, DEPENDENT_APP_ROOT)
-  console.log(1, JSON.parse(fs.readFileSync('package.json')))
+  console.log('---> STATE_FILE_NAME:', STATE_FILE_NAME)
+  console.log('---> DEPENDENT_APP_ROOT:', DEPENDENT_APP_ROOT)
+  console.log('---> STATE_FILE_PATH:', STATE_FILE_PATH)
+  console.log('---> read without path, only filename:', JSON.parse(fs.readFileSync(STATE_FILE_NAME)))
   if (!existsSync(STATE_FILE_NAME)) {
     // return initState()
   } else {
