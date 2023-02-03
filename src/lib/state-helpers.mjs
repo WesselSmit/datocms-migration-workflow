@@ -8,7 +8,7 @@ const INITIAL_STATE = { currentEnv: null }
 
 export async function getState() {
   if (!existsSync(STATE_FILE_NAME)) {
-    // return initState()
+    return initState()
   } else {
     const { default: state } = await importJsFileFromDependantAppRoot(STATE_FILE_NAME)
     return state
@@ -17,7 +17,7 @@ export async function getState() {
 
 export function setState(newState) {
   if (!existsSync(STATE_FILE_NAME)) {
-    // initState()
+    initState()
   }
 
   writeJsFileToDependantAppRoot(STATE_FILE_NAME, newState)
@@ -30,9 +30,4 @@ function initState() {
   writeJsFileToDependantAppRoot(STATE_FILE_NAME, INITIAL_STATE)
 
   return INITIAL_STATE
-}
-
-function writeState(state) {
-  const stateJsString = `export default ${JSON.stringify(state, null, 2)}`
-  writeFileSync(STATE_FILE_NAME, stateJsString, 'utf8')
 }
