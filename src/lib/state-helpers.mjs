@@ -1,27 +1,26 @@
 import { existsSync, writeFileSync } from 'node:fs'
-import { resolve } from 'node:path'
-import { APP_ROOT, STATE_FILE_NAME } from './constants.mjs'
+import { DEPENDENT_APP_ROOT, STATE_FILE_NAME } from './constants.mjs'
 
 
 const INITIAL_STATE = { currentEnv: null }
-const PATH_TO_STATE_FILE = resolve(APP_ROOT, STATE_FILE_NAME)
 
 
 export async function getState() {
-  if (!existsSync(PATH_TO_STATE_FILE)) {
-    return initState()
+  console.log('---> STATE_FILE_NAME:', STATE_FILE_NAME, DEPENDENT_APP_ROOT)
+  if (!existsSync(STATE_FILE_NAME)) {
+    // return initState()
   } else {
-    const state = await import(PATH_TO_STATE_FILE)
+    const state = await import(STATE_FILE_NAME)
     return state.default
   }
 }
 
 export function setState(newState) {
-  if (!existsSync(PATH_TO_STATE_FILE)) {
-    initState()
+  if (!existsSync(STATE_FILE_NAME)) {
+    // initState()
   }
 
-  writeState(newState)
+  // writeState(newState)
 
   return newState
 }
@@ -35,5 +34,5 @@ function initState() {
 
 function writeState(state) {
   const stateJsString = `export default ${JSON.stringify(state, null, 2)}`
-  writeFileSync(PATH_TO_STATE_FILE, stateJsString, 'utf8')
+  writeFileSync(STATE_FILE_NAME, stateJsString, 'utf8')
 }
