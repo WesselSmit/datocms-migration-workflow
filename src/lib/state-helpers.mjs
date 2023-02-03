@@ -1,5 +1,5 @@
 import { existsSync, writeFileSync } from 'node:fs'
-import { importJsFileFromDependantApp } from './finder.mjs'
+import { importJsFileFromDependantAppRoot, writeJsFileToDependantAppRoot } from './finder.mjs'
 import { STATE_FILE_NAME } from './constants.mjs'
 
 
@@ -10,9 +10,7 @@ export async function getState() {
   if (!existsSync(STATE_FILE_NAME)) {
     // return initState()
   } else {
-    // const state = await import(STATE_FILE_NAME)
-    // return state.default
-    const { default: state } = await importJsFileFromDependantApp('datocms-mw-state.mjs')
+    const { default: state } = await importJsFileFromDependantAppRoot(STATE_FILE_NAME)
     return state
   }
 }
@@ -22,14 +20,14 @@ export function setState(newState) {
     // initState()
   }
 
-  // writeState(newState)
+  writeJsFileToDependantAppRoot(STATE_FILE_NAME, newState)
 
   return newState
 }
 
 
 function initState() {
-  writeState(INITIAL_STATE)
+  writeJsFileToDependantAppRoot(STATE_FILE_NAME, INITIAL_STATE)
 
   return INITIAL_STATE
 }

@@ -1,4 +1,4 @@
-import { readdirSync } from 'node:fs'
+import { readdirSync, writeFileSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -10,13 +10,13 @@ export const APP_ROOT = (() => {
   return dirname(pathToRoot)
 })()
 
-export const DEPENDENT_APP_ROOT = (() => {
+export function findFileInDependantAppRoot(fileInDependantAppRoot) {
   function findDirOfFileLocation(dir, filename) {
     const ls = readdirSync(dir)
     const hasStateFile = ls.includes(filename)
 
     if (hasStateFile) {
-      return dir
+      return join(dir, fileInDependantAppRoot)
     } else if (dir === '/') {
       throw new Error(`Could not find a ${filename} in project root.`)
     } else {
@@ -29,11 +29,18 @@ export const DEPENDENT_APP_ROOT = (() => {
   const startingDir = resolve(APP_ROOT, '..')
 
   return findDirOfFileLocation(startingDir, 'package.json')
-})()
+}
 
-export async function importJsFileFromDependantApp(filename) {
-  const filePath = join(DEPENDENT_APP_ROOT, filename)
+export async function importJsFileFromDependantAppRoot(filename) {
+  const filePath = findFileInDependantAppRoot(filename)
   const file = await import(filePath)
 
   return file
+}
+
+export function writeJsFileToDependantAppRoot(filename, content) {
+  const filePath = findFileInDependantAppRoot(filename)
+  const contentJsString = `export default ${JSON.stringify(content, null, 2)}`
+
+  writeFileSync(filePath, contentJsString, 'utf8')
 }
