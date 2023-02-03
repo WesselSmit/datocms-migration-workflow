@@ -1,6 +1,6 @@
 {
   "name": "datocms-migration-workflow",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "Wrapper library to automate and simplify the datocms migration workflow",
   "keywords": [
     "datocms",

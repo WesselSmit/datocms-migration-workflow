@@ -7,7 +7,7 @@ const INITIAL_STATE = { currentEnv: null }
 import fs from 'node:fs'
 export async function getState() {
   console.log('---> STATE_FILE_NAME:', STATE_FILE_NAME, DEPENDENT_APP_ROOT)
-  console.log(JSON.parse(fs.readFileSync(1, 'package.json')))
+  console.log(1, JSON.parse(fs.readFileSync('package.json')))
   if (!existsSync(STATE_FILE_NAME)) {
     // return initState()
   } else {
