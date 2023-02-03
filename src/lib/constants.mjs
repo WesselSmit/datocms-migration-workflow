@@ -9,25 +9,23 @@ const pathToRoot = resolve(currentFilename, '../../')
 
 
 // get root of datocms-migration-workflow dependant dir (package that has datocms-migration-workflow as a dependency)
-function recursivelyLookUpFsTree(dir) {
+function findFileLocation(dir, filename) {
   const ls = readdirSync(dir)
-  const hasStateFile = ls.includes(STATE_FILE_NAME)
-
-  console.log(ls)
+  const hasStateFile = ls.includes(filename)
 
   if (hasStateFile) {
-    return join(dir, STATE_FILE_NAME)
+    return join(dir, filename)
   } else if (dir === '/') {
-    throw new Error(`Could not find a ${STATE_FILE_NAME} file.`)
+    throw new Error(`Could not find a ${filename}.`)
   } else {
-    return recursivelyLookUpFsTree(resolve(dir, '..'))
+    return findFileLocation(resolve(dir, '..'))
   }
 }
 
 
 export const APP_ROOT = dirname(pathToRoot)
 export const STATE_FILE_NAME = 'datocms-mw-state.mjs'
-export const DEPENDENT_APP_ROOT = recursivelyLookUpFsTree(APP_ROOT)
+export const DEPENDENT_APP_ROOT = findFileLocation(resolve(APP_ROOT, '..'), 'package.json')
 export const DEFAULT_EXIT_CODE = 1
 export const MIGRATIONS_DIR = './migrations'
 export const MIGRATION_MODEL_API_KEY = 'schema_migration'

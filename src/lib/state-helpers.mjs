@@ -4,9 +4,10 @@ import { DEPENDENT_APP_ROOT, STATE_FILE_NAME } from './constants.mjs'
 
 const INITIAL_STATE = { currentEnv: null }
 
-
+import fs from 'node:fs'
 export async function getState() {
   console.log('---> STATE_FILE_NAME:', STATE_FILE_NAME, DEPENDENT_APP_ROOT)
+  console.log(JSON.parse(fs.readFileSync(1, 'package.json')))
   if (!existsSync(STATE_FILE_NAME)) {
     // return initState()
   } else {
