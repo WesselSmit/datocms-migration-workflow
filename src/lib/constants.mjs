@@ -18,7 +18,7 @@ function findFileLocation(dir, filename) {
   } else if (dir === '/') {
     throw new Error(`Could not find a ${filename}.`)
   } else {
-    return findFileLocation(resolve(dir, '..'))
+    return findFileLocation(resolve(dir, '..'), filename)
   }
 }
 
