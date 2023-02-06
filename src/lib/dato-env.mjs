@@ -1,5 +1,5 @@
 import * as dotenv from 'dotenv-safe'
-import { datoSiteRequest } from './dato-request.mjs'
+import { datoSiteRequest, datoContentRequest } from './dato-request.mjs'
 import loadQuery from './load-query.mjs'
 
 

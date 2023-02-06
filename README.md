@@ -34,7 +34,7 @@ The `.gitkeep` is used to ensure the directory is included in version control sy
 This library makes a few assumptions about the structure of you datocms instance, it is recommended to follow the following steps:
 1. Create a new blank datocms instance.
 2. Create a model (you can enter any model name you like) with `schema_migration` as the `Field ID`.
-3. Add a field named "Migrations file name" with the type `Single-line string` and make it required under "Validations".
+3. Add a field named "Migrations file name" with the type `Single-line string` and make it required under "Validations", the `Field ID` should be `migration_filename`.
 
 ### API token
 This library requires access to both the content delivery and management api.
