@@ -9,7 +9,10 @@ export default async function datoFetch(query, options, useEnvFromState = true) 
   }
 
   if (options.env) {
-    options.url = `https://graphql.datocms.com/environments/${options.env}`
+    options.header = {
+      ...options.headers,
+      'X-Environment': options.env,
+    }
   } else if (useEnvFromState) {
     const { currentEnv: envFromState } = await getState()
 

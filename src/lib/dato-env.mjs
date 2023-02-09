@@ -10,13 +10,12 @@ const { DATOCMS_API_TOKEN } = process.env
 
 export async function getAppliedMigrationsForEnv(env, migrationsModelApiKey) {
   const query = loadQuery('migrations')
-  const url = `https://graphql.datocms.com/environments/${env}`
 
   const { allSchemaMigrations } = await datoContentRequest(query, {
-    url,
     paginatedFieldName: migrationsModelApiKey,
     headers: {
-      Authorization: `Bearer ${DATOCMS_API_TOKEN}`
+      'X-Environment': env,
+      Authorization: `Bearer ${DATOCMS_API_TOKEN}`,
     }
   })
   const migrationNames = allSchemaMigrations.map(migration => migration.name)

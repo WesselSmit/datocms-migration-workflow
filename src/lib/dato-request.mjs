@@ -32,7 +32,6 @@ export async function datoSiteRequest(endpoint) {
 
 export async function datoContentRequest(query, optionsFromArgs) {
   const DEFAULT_OPTIONS = {
-    url: 'https://graphql.datocms.com/',
     vars: {},
     paginatedFieldName: '',
   }
@@ -48,7 +47,7 @@ export async function datoContentRequest(query, optionsFromArgs) {
 
   async function getContent({ variables }) {
     try {
-      const res = await fetch(options.url, {
+      const res = await fetch('https://graphql.datocms.com', {
         method: 'POST',
         headers: options.headers,
         body: JSON.stringify({
