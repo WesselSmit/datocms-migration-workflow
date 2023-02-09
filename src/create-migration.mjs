@@ -49,7 +49,7 @@ try {
     log(`Deleted the outdated "${migrationPath}".`)
   })
 
-  await datoCmd(`npx datocms migrations:new ${migrationName} --autogenerate=${envName}:${primaryEnvId}`)
+  await datoCmd(`npx datocms migrations:new ${migrationName} --autogenerate=${envName}:${primaryEnvId} --js`)
   log(`Created migration for changes on "${envName}" based on "${primaryEnvId}".`)
 
   await datoCmd(`npx datocms environments:destroy ${testEnvName}`)
