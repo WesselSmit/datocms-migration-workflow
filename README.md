@@ -45,6 +45,16 @@ You `.gitignore` should include `datocms-mw-state.mjs` which is used to persist 
 
 > the generated migration files should be included in the version control system, do not gitignore them!
 
+### Custom configuration
+You can configure the library by adding a `datocms-mw-config` property in the `datocms.config.json` file in the root of your project.
+The currently available options are:
+
+| Argument | Description | Default value | Usage notes |
+|---|---|---|---|
+| `typescript` | Output generated migrations in typescript. | false | Requires `compilerOptions.module` to be set to `commonJS` in `tsconfig.json`.¹ |
+
+_¹ [https://community.datocms.com/t/migration-error/3639/2](https://community.datocms.com/t/migration-error/3639/2)_
+
 ## Workflow
 You can read up on the recommended workflow, that this wrapper library implements, in the [official datocms documentation](https://www.datocms.com/docs/scripting-migrations/safe-iterations-using-environments). This library has simplified these steps into 3 commands.
 
@@ -199,5 +209,5 @@ This shows more advanced usage, but in the most basic usage you only have to spe
 ## Roadmap
 Things I would like to add in the future:
 - Currently the dev is responsible for making sure there is a `migrations/.gitkeep` directory, this should be taken care of automatically in either a post-install script or a check before the npm/bin scripts are executed.
-- Currently the migrations directory and the migration modelApiKey are hardcoded in the codebase, devs should be able to create a `datocms.config.json` file in the root of their project and the migrations directory and the migration modelApiKey in that file should be used instead. You can than also use the datocms cma api to create a schema_migration model (or use any other name as specigied specified in the `datocms.config.json`) so the dev does not have to do this manually.
+- Currently the migrations directory and the migration modelApiKey are hardcoded in the codebase, devs should be able to specify the migrations directory and the migration modelApiKey as options in `datocms.config.json` > "datocms-mw-config". You can than also use the datocms cma api to create a schema_migration model (or use any other name as specigied specified in the `datocms.config.json`) so the dev does not have to do this manually.
 - ErrorLog's currently are red, normal log's should be blue and YesNo prompts should be green, logs from the cli should be gray.
