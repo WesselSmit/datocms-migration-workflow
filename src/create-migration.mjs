@@ -17,6 +17,7 @@ import {
 
 
 const [migrationName, envNameFromCli] = args
+const CONFIG = await config
 let envName = envNameFromCli
 
 if (!migrationName) {
@@ -49,7 +50,7 @@ try {
     log(`Deleted the outdated "${migrationPath}".`)
   })
 
-  const migrationOutputFlag = config?.typescript ? '--ts' : '--js'
+  const migrationOutputFlag = CONFIG['datocms-mw-config']?.typescript ? '--ts' : '--js'
 
   await datoCmd(`npx datocms migrations:new ${migrationName} --autogenerate=${envName}:${primaryEnvId} ${migrationOutputFlag}`)
   log(`Created migration for changes on "${envName}" based on "${primaryEnvId}".`)
