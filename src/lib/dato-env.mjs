@@ -1,11 +1,16 @@
 import * as dotenv from 'dotenv-safe'
 import { datoSiteRequest, datoContentRequest } from './dato-request.mjs'
 import loadQuery from './load-query.mjs'
+import { errorLog } from './console.mjs'
 
 
 dotenv.config()
 
 const { DATOCMS_API_TOKEN } = process.env
+
+if (DATOCMS_API_TOKEN === undefined) {
+  errorLog('Could not find a DATOCMS_API_TOKEN env variable.')
+}
 
 
 export async function getAppliedMigrationsForEnv(env, migrationsModelApiKey) {

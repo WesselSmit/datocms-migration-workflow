@@ -11,6 +11,10 @@ const DEFAULT_HEADERS = {
   Accept: 'application/json',
 }
 
+if (DATOCMS_API_TOKEN === undefined) {
+  errorLog('Could not find a DATOCMS_API_TOKEN env variable.')
+}
+
 
 export async function datoSiteRequest(endpoint) {
   try {
