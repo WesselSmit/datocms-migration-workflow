@@ -1,5 +1,5 @@
-import { existsSync, writeFileSync } from 'node:fs'
-import { importJsFileFromDependantAppRoot, writeJsFileToDependantAppRoot } from './finder.mjs'
+import { existsSync } from 'node:fs'
+import { readFileFromDependantAppRoot, writeJsFileToDependantAppRoot } from './finder.mjs'
 import { STATE_FILE_NAME } from './constants.mjs'
 
 
@@ -10,7 +10,8 @@ export async function getState() {
   if (!existsSync(STATE_FILE_NAME)) {
     return initState()
   } else {
-    const { default: state } = await importJsFileFromDependantAppRoot(STATE_FILE_NAME)
+    const { default: state } = await readFileFromDependantAppRoot(STATE_FILE_NAME)
+
     return state
   }
 }

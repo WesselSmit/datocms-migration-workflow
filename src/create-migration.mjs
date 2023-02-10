@@ -8,6 +8,7 @@ import datoCmd from './lib/dato-cmd.mjs'
 import { getPrimaryEnv, getAppliedMigrationsForEnv } from './lib/dato-env.mjs'
 import { getState } from './lib/state-helpers.mjs'
 import { MIGRATIONS_DIR } from './lib/finder.mjs'
+import { config } from './lib/config.mjs'
 import {
   STATE_FILE_NAME,
   MIGRATION_MODEL_API_KEY,
@@ -48,7 +49,9 @@ try {
     log(`Deleted the outdated "${migrationPath}".`)
   })
 
-  await datoCmd(`npx datocms migrations:new ${migrationName} --autogenerate=${envName}:${primaryEnvId} --js`)
+  const migrationOutputFlag = config?.typescript ? '--ts' : '--js'
+
+  await datoCmd(`npx datocms migrations:new ${migrationName} --autogenerate=${envName}:${primaryEnvId} ${migrationOutputFlag}`)
   log(`Created migration for changes on "${envName}" based on "${primaryEnvId}".`)
 
   await datoCmd(`npx datocms environments:destroy ${testEnvName}`)
