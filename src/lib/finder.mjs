@@ -10,6 +10,13 @@ export const APP_ROOT = (() => {
   return dirname(pathToRoot)
 })()
 
+export const MIGRATIONS_DIR = (() => {
+  const dependantAppRoot = dirname(findFileInDependantAppRoot('package.json'))
+  const migrationsDirInDependantApp = join(dependantAppRoot, 'migrations')
+
+  return migrationsDirInDependantApp
+})()
+
 export function findFileInDependantAppRoot(fileInDependantAppRoot) {
   function findDirOfFileLocation(dir, filename) {
     const ls = readdirSync(dir)
