@@ -1,6 +1,7 @@
-import { readdirSync, writeFileSync } from 'node:fs'
-import { dirname, join, resolve } from 'node:path'
+import { readdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { dirname, extname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { errorLog } from './console.mjs'
 
 
 export const APP_ROOT = (() => {
@@ -10,9 +11,15 @@ export const APP_ROOT = (() => {
   return dirname(pathToRoot)
 })()
 
+export const DEPENDANT_APP_ROOT = (() => {
+  const packageJsonInDependantAppRoot = findFileInDependantAppRoot('package.json')
+  const dependantAppRoot = dirname(packageJsonInDependantAppRoot)
+
+  return dependantAppRoot
+})()
+
 export const MIGRATIONS_DIR = (() => {
-  const dependantAppRoot = dirname(findFileInDependantAppRoot('package.json'))
-  const migrationsDirInDependantApp = join(dependantAppRoot, 'migrations')
+  const migrationsDirInDependantApp = join(DEPENDANT_APP_ROOT, 'migrations')
 
   return migrationsDirInDependantApp
 })()
@@ -38,11 +45,33 @@ export function findFileInDependantAppRoot(fileInDependantAppRoot) {
   return findDirOfFileLocation(startingDir, 'package.json')
 }
 
-export async function importJsFileFromDependantAppRoot(filename) {
-  const filePath = findFileInDependantAppRoot(filename)
-  const file = await import(filePath)
+export async function readFileFromDependantAppRoot(filename) {
+  if (!filename) {
+    errorLog(`No filename provided.`)
+  }
 
-  return file
+  const fileExtension = extname(filename)
+
+  if (!fileExtension) {
+    errorLog(`No file extension provided.`)
+  }
+
+  const filePath = join(DEPENDANT_APP_ROOT, filename)
+  let importedFileContents
+
+  switch (fileExtension) {
+    case '.js':
+    case '.mjs':
+      importedFileContents = await importJsFile(filePath)
+      break
+    case '.json':
+      importedFileContents = await importJsonFile(filePath)
+      break
+    default:
+      errorLog(`No import support for "${fileExtension}" files.`)
+  }
+
+  return importedFileContents
 }
 
 export function writeJsFileToDependantAppRoot(filename, content) {
@@ -50,4 +79,26 @@ export function writeJsFileToDependantAppRoot(filename, content) {
   const contentJsString = `export default ${JSON.stringify(content, null, 2)}`
 
   writeFileSync(filePath, contentJsString, 'utf8')
+}
+
+
+async function importJsFile(filePath) {
+  try {
+    const js = await import(filePath)
+
+    return js
+  } catch (error) {
+    errorLog(error)
+  }
+}
+
+async function importJsonFile(filePath) {
+  try {
+    const file = readFileSync(filePath, 'utf8')
+    const json = JSON.parse(file)
+
+    return json
+  } catch (error) {
+    errorLog(error)
+  }
 }
