@@ -5,16 +5,24 @@ import { DEFAULT_EXIT_CODE } from './constants.mjs'
 
 
 export function log(string) {
-  const formattedString = formatString(string, false)
+  const prefixedString = `[LOG] ${string}`
+  const coloredString = colorString(prefixedString, 'default')
 
-  stdout.write(formattedString)
+  print(coloredString)
 }
 
 export function errorLog(string, exitCode = DEFAULT_EXIT_CODE) {
-  const formattedString = formatString(string, true)
+  const prefixedString = `[ERROR] ${string}`
+  const coloredString = colorString(prefixedString, 'red')
 
-  stdout.write(formattedString)
+  print(coloredString)
   stop(exitCode)
+}
+
+export function logInColor(string, color) {
+  const coloredString = colorString(string, color)
+
+  print(coloredString)
 }
 
 // todo ideally promptYesNo would re-prompt if answer is not a y/n answer
@@ -24,14 +32,15 @@ export async function promptYesNo(question) {
     NO_VALUES: ['n', 'no'],
   }
 
-  const formattedQuestion = `${question} (y/n)\n`
+  const formattedQuestion = `[PROMPT] ${question} (y/n)`
+  const coloredQuestion = colorString(formattedQuestion, 'blue')
   const rl = createInterface({
     input: stdin,
     output: stdout,
   })
 
   return new Promise(resolve => {
-    rl.question(formattedQuestion, async (answer) => {
+    rl.question(coloredQuestion, async (answer) => {
       rl.close()
 
       const normalisedAnswer = answer
@@ -50,14 +59,19 @@ export async function promptYesNo(question) {
 }
 
 
-function formatString(string, isError = false) {
+function colorString(string, desiredColor = 'default') {
   const ANSI_COLORS = {
-    DEFAULT: '\x1b[0m',
-    RED: '\x1b[31m',
+    default: '\x1b[0m',
+    red: '\x1b[31m',
+    blue: '\x1b[36m',
+    gray: '\x1b[90m',
   }
 
-  const prefix = isError ? '[ERROR]' : '[LOG]'
-  const color = isError ? ANSI_COLORS.RED : ANSI_COLORS.DEFAULT
+  const color = ANSI_COLORS[desiredColor] ?? ANSI_COLORS.default
 
-  return `${color}${prefix} ${string}${ANSI_COLORS.DEFAULT}\n`
+  return `${color}${string}${ANSI_COLORS.default}\n`
+}
+
+function print(string) {
+  stdout.write(string)
 }

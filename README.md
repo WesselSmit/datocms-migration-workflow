@@ -20,7 +20,7 @@ This is useful when you want to reproduce the cms structure for multiple environ
 Migrations are files that describe the changes made to the cms structure, with structure I mean all models, fields and settings, but not the actual content such as records and their values.
 The migrations can be applied in chronological order to reproduce all changes made to the cms, guaranteeing an identical cms structure everytime.
 
-Migrations are very powerful and can help you in many ways, but they are not without their downsides; without auto-generation is requires a lot of manual work and in order to use auto-generation you need to use the datocms-cli which exposes multiple commands you'll need to remember and understand.
+Migrations are very powerful and can help you in many ways, but they are not without their downsides; without auto-generation it requires a lot of manual work and in order to use auto-generation you need to use the datocms-cli which exposes multiple commands you'll need to remember and understand.
 That's why this library aims to simplify the auto-generation of datocms migrations for you.
 
 ## Setup
@@ -210,4 +210,3 @@ This shows more advanced usage, but in the most basic usage you only have to spe
 Things I would like to add in the future:
 - Currently the dev is responsible for making sure there is a `migrations/.gitkeep` directory, this should be taken care of automatically in either a post-install script or a check before the npm/bin scripts are executed.
 - Currently the migrations directory and the migration modelApiKey are hardcoded in the codebase, devs should be able to specify the migrations directory and the migration modelApiKey as options in `datocms.config.json` > "datocms-mw-config". You can than also use the datocms cma api to create a schema_migration model (or use any other name as specigied specified in the `datocms.config.json`) so the dev does not have to do this manually.
-- ErrorLog's currently are red, normal log's should be blue and YesNo prompts should be green, logs from the cli should be gray.

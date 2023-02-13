@@ -1,6 +1,6 @@
 import { exec } from 'node:child_process'
 import * as dotenv from 'dotenv-safe'
-import { errorLog } from './console.mjs'
+import { logInColor, errorLog } from './console.mjs'
 
 
 dotenv.config()
@@ -21,7 +21,7 @@ export default async function datoCmd(cmd, jsonOutput = true) {
     exec(
       fullCmd,
       (err, stdout) => {
-        console.log(stdout)
+        logInColor(stdout, 'gray')
         err ? reject(err) : resolve()
       }
     )
