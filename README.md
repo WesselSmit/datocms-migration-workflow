@@ -25,10 +25,9 @@ That's why this library aims to simplify the auto-generation of datocms migratio
 
 ## Setup
 ### Folder structure
-Create a `migrations/.gitkeep` file in the root of your project to make sure there is a place for the migrations to be stored.
+You can set your own migrations directory in the `datocms.config.json` file [also see](https://www.datocms.com/docs/scripting-migrations/installing-the-cli#setting-up-a-cli-profile), the default is `migrations`.
 
-The migrations files should be included in your version control system, do not gitignore them!
-The `.gitkeep` is used to ensure the directory is included in version control system even if there are no migration files yet.
+The generated migration files should be included in your version control system, do not gitignore them!
 
 ### CMS structure
 This library makes a few assumptions about the structure of you datocms instance, it is recommended to follow the following steps:
@@ -43,7 +42,7 @@ You can either create a new api token with those permissions or use the standard
 ### Ignoring files
 You `.gitignore` should include `datocms-mw-state.mjs` which is used to persist state this package uses to make it more convenient to use.
 
-> the generated migration files should be included in the version control system, do not gitignore them!
+> the generated migration files should be included in your version control system, do not gitignore them!
 
 ### Custom configuration
 You can configure the library by adding a `datocms-mw-config` property in the `datocms.config.json` file in the root of your project.
@@ -217,5 +216,6 @@ Things I would like to add in the future:
 - [] big refactor of the codebase to get everything tidy (especially the functions in finder.mjs could be more functional - use more helper functions functies) + see todo comments in codebase
 - [] read through entire readme and make sure: it is up to date with the latest changes + it is easy to understand + it does not have any typos.
 - [] release as v1.1.0 on npm.
+- [] add a test directory where this package is loaded as a dependency and the commands can easily be tested
 - [] rewrite entire project in typescript.
 

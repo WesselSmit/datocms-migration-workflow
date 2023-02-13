@@ -9,11 +9,7 @@ import { getPrimaryEnv, getAppliedMigrationsForEnv } from './lib/dato-env.mjs'
 import { getState } from './lib/state-helpers.mjs'
 import { getMigrationsDir } from './lib/finder.mjs'
 import { config } from './lib/config.mjs'
-import {
-  STATE_FILE_NAME,
-  MIGRATION_MODEL_API_KEY,
-  TEST_ENV_NAME_SUFFIX
-} from './lib/constants.mjs'
+import { STATE_FILE_NAME, MIGRATION_MODEL_API_KEY, TEST_ENV_NAME_SUFFIX } from './lib/constants.mjs'
 
 
 const [migrationName, envNameFromCli] = args
