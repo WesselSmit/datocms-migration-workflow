@@ -23,6 +23,7 @@ export async function getMigrationsDir() {
   const { config } = await import('./config.mjs')
   const CONFIG = await config
 
+  // todo support other profiles as well (users should be able to specify a profile in the CLI using a flag, just like it works in https://github.com/datocms/cli/tree/main/packages/cli)
   const pathToMigrationsDirInDependantAppRoot = CONFIG.profiles?.default?.migrations?.directory
   const migrationsDirInDependantApp = join(DEPENDANT_APP_ROOT, pathToMigrationsDirInDependantAppRoot)
   return migrationsDirInDependantApp
