@@ -3,6 +3,7 @@ import { getState } from '../lib/state-helpers.mjs'
 import { STATE_FILE_NAME } from '../lib/constants.mjs'
 
 
+// todo 'useEnvFromState' should be part of 'options'
 export default async function datoFetch(query, options, useEnvFromState = true) {
   if (!query) {
     throw new Error('Please pass a query to the datoFetch function.')
