@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
-import { unlinkSync, readdirSync } from 'node:fs'
-import { resolve } from 'node:path'
+import { existsSync, readdirSync, unlinkSync } from 'node:fs'
+import { extname, resolve } from 'node:path'
 import { args } from './lib/cli.mjs'
 import { log, errorLog } from './lib/console.mjs'
 import datoCmd from './lib/dato-cmd.mjs'
 import { getPrimaryEnv, getAppliedMigrationsForEnv } from './lib/dato-env.mjs'
 import { getState } from './lib/state-helpers.mjs'
-import { MIGRATIONS_DIR } from './lib/finder.mjs'
+import { getMigrationsDir } from './lib/finder.mjs'
 import { config } from './lib/config.mjs'
 import {
   STATE_FILE_NAME,
@@ -18,6 +18,7 @@ import {
 
 const [migrationName, envNameFromCli] = args
 const CONFIG = await config
+const MIGRATIONS_DIR = await getMigrationsDir()
 let envName = envNameFromCli
 
 if (!migrationName) {
@@ -39,16 +40,26 @@ if (!envNameFromCli) {
 try {
   const { id: primaryEnvId } = await getPrimaryEnv()
   const testEnvName = `${envName}${TEST_ENV_NAME_SUFFIX}`
+  const migrationsDirExists = existsSync(MIGRATIONS_DIR)
 
-  const allMigrations = readdirSync(MIGRATIONS_DIR)
-  const appliedMigrations = await getAppliedMigrationsForEnv(envName, MIGRATION_MODEL_API_KEY)
-  const unAppliedMigrations = allMigrations.filter(migration => !appliedMigrations.includes(migration) && migration !== '.gitkeep')
+  if (migrationsDirExists) {
+    const allMigrations = readdirSync(MIGRATIONS_DIR)
+    const appliedMigrations = await getAppliedMigrationsForEnv(envName, MIGRATION_MODEL_API_KEY)
 
-  unAppliedMigrations.forEach(migration => {
-    const migrationPath = resolve(MIGRATIONS_DIR, migration)
-    unlinkSync(migrationPath)
-    log(`Deleted the outdated "${migrationPath}".`)
-  })
+    const unAppliedMigrations = allMigrations.filter(migration => {
+      const migrationIsApplied = appliedMigrations.includes(migration)
+      const fileExtension = extname(migration)
+      const isJsOrTsFile = ['.js', '.ts'].includes(fileExtension)
+
+      return !migrationIsApplied && isJsOrTsFile
+    })
+
+    unAppliedMigrations.forEach(migration => {
+      const migrationPath = resolve(MIGRATIONS_DIR, migration)
+      unlinkSync(migrationPath)
+      log(`Deleted the outdated "${migrationPath}".`)
+    })
+  }
 
   const migrationOutputFlag = CONFIG['datocms-mw-config']?.typescript ? '--ts' : '--js'
 

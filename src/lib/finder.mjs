@@ -18,11 +18,15 @@ export const DEPENDANT_APP_ROOT = (() => {
   return dependantAppRoot
 })()
 
-export const MIGRATIONS_DIR = (() => {
-  const migrationsDirInDependantApp = join(DEPENDANT_APP_ROOT, 'migrations')
+export async function getMigrationsDir() {
+  // todo refactor (the dynamic import below is necessary to prevent infinite import loops between finder.mjs and config.mjs)
+  const { config } = await import('./config.mjs')
+  const CONFIG = await config
 
+  const pathToMigrationsDirInDependantAppRoot = CONFIG.profiles?.default?.migrations?.directory
+  const migrationsDirInDependantApp = join(DEPENDANT_APP_ROOT, pathToMigrationsDirInDependantAppRoot)
   return migrationsDirInDependantApp
-})()
+}
 
 export function findFileInDependantAppRoot(fileInDependantAppRoot) {
   function findDirOfFileLocation(dir, filename) {

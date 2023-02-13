@@ -2,7 +2,7 @@ import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { DEPENDANT_APP_ROOT, readFileFromDependantAppRoot } from './finder.mjs'
 import { errorLog } from './console.mjs'
-import { CONFIG_FILE_NAME } from './constants.mjs'
+import { CONFIG_FILE_NAME, DEFAULT_CONFIG } from './constants.mjs'
 
 
 export const config = (async () => {
@@ -15,5 +15,10 @@ export const config = (async () => {
 
   const configuration = await readFileFromDependantAppRoot(CONFIG_FILE_NAME)
 
-  return configuration
+  const mergedConfiguration = {
+    ...DEFAULT_CONFIG,
+    ...configuration,
+  }
+
+  return mergedConfiguration
 })()
