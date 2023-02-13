@@ -192,6 +192,8 @@ try {
 
 This shows more advanced usage, but in the most basic usage you only have to specify the query and authorization header.
 
+> You'll need to install `datocms-migration-workflow` as dependency (instead of devDependency) to use this function.
+
 ### Details
 | Argument | Description | Default value | Required | Usage notes |
 |---|---|---|---|---|
