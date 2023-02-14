@@ -217,6 +217,6 @@ Things I would like to add in the future:
 - [ ] big refactor of the codebase to get everything tidy (especially the functions in finder.mjs could be more functional - use more helper functions functies) + see todo comments in codebase
 - [ ] read through entire readme and make sure: it is up to date with the latest changes + it is easy to understand + it does not have any typos.
 - [ ] release as v1.1.0 on npm.
-- [ ] add a test directory where this package is loaded as a dependency and the commands can easily be tested
+- [ ] add a test directory where this package is loaded as a dependency and the commands can easily be tested (this should also note you cannot 'use npm' to test as some functions in finder.mjs will error --> a good solution for this is still necessary)
 - [ ] rewrite entire project in typescript.
 
