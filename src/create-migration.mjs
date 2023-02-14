@@ -2,7 +2,7 @@
 
 import { existsSync, readdirSync, unlinkSync } from 'node:fs'
 import { extname, resolve } from 'node:path'
-import { params } from './lib/cli.mjs'
+import { args } from './lib/cli.mjs'
 import { log, errorLog } from './lib/console.mjs'
 import datoCmd from './lib/dato-cmd.mjs'
 import { getPrimaryEnv, getAppliedMigrationsForEnv } from './lib/dato-env.mjs'
@@ -12,7 +12,7 @@ import { config } from './lib/config.mjs'
 import { STATE_FILE_NAME, MIGRATION_MODEL_API_KEY, TEST_ENV_NAME_SUFFIX } from './lib/constants.mjs'
 
 
-const [migrationName, envNameFromCli] = params?.args
+const [migrationName, envNameFromCli] = args
 const CONFIG = await config
 const MIGRATIONS_DIR = await getMigrationsDir()
 let envName = envNameFromCli
