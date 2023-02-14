@@ -29,7 +29,7 @@ if (!envNameFromCli) {
     log(`Using "${envNameFromState}" as datocms environment.`)
     envName = envNameFromState
   } else {
-    errorLog('Aborting. You must specify an existing datocms environment name.')
+    errorLog('You must specify an existing datocms environment name.')
   }
 }
 

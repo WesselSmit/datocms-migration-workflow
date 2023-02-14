@@ -24,10 +24,38 @@ Migrations are very powerful and can help you in many ways, but they are not wit
 That's why this library aims to simplify the auto-generation of datocms migrations for you.
 
 ## Setup
-### Folder structure
-You can set your own migrations directory in the `datocms.config.json` file [also see](https://www.datocms.com/docs/scripting-migrations/installing-the-cli#setting-up-a-cli-profile), the default is `migrations`.
 
-The generated migration files should be included in your version control system, do not gitignore them!
+### Requirements
+To make sure everything works this package requires the following configuration:
+- [Base configuration](#base-configuration)
+- [CMS structure](#cms-structure)
+- [API token](#api-token)
+- [Ignoring files](#ignoring-files)
+
+Besides the requirered configuration seen above, this package also offers some optional configuration:
+- [Migrations directory](#migrations-directory)
+- [Custom configuration](#custom-configuration)
+
+### Base configuration
+This library requires a `datocms.config.json` file in the root of your project with atleast a default profile containing the following properties:
+
+```json
+{
+  "profiles": {
+    "default": {
+      "logLevel": "BODY",
+      "migrations": {
+        "directory": "migrations",
+        "modelApiKey": "schema_migration"
+      }
+    }
+  }
+}
+```
+
+This is necessary because this library is a wrapper and uses `@datocms/cli` under the hood, see their official documentation for more info [@datocms/cli docs](https://github.com/datocms/cli/tree/main/packages/cli) and [datocms: configuring the cli](https://www.datocms.com/docs/scripting-migrations/installing-the-cli#setting-up-a-cli-profile).
+
+> You can also add optional configuration to the `datocms.config.json` file to change the behaviour of `datocms-migration-workflow`, see [Custom configuration](#custom-configuration).
 
 ### CMS structure
 This library makes a few assumptions about the structure of you datocms instance, it is recommended to follow the following steps:
@@ -38,14 +66,40 @@ This library makes a few assumptions about the structure of you datocms instance
 ### API token
 This library requires access to both the content delivery and management api.
 You can either create a new api token with those permissions or use the standard "Full-access API Token" token.
+Add it to a `.env` file (also see the `.env.example` file) in the root of your project.
 
 ### Ignoring files
 You `.gitignore` should include `datocms-mw-state.mjs` which is used to persist state this package uses to make it more convenient to use.
 
 > the generated migration files should be included in your version control system, do not gitignore them!
 
+### Migrations directory
+You can set your own migrations directory in the `datocms.config.json` file [also see](https://www.datocms.com/docs/scripting-migrations/installing-the-cli#setting-up-a-cli-profile).
+
+The generated migration files should be included in your version control system, do not gitignore them!
+
 ### Custom configuration
 You can configure the library by adding a `datocms-mw-config` property in the `datocms.config.json` file in the root of your project.
+
+```json
+{
+  "profiles": {
+    "default": {
+      "logLevel": "BODY",
+      "migrations": {
+        "directory": "migrations",
+        "modelApiKey": "schema_migration"
+      }
+    }
+  },
+  "datocms-mw-config": {
+    "profile": "default",
+    "typescript": true,
+    "jsonLogs": true
+  }
+}
+```
+
 The currently available options are:
 
 | Argument | Description | Default value | notes |
@@ -212,7 +266,7 @@ This shows more advanced usage, but in the most basic usage you only have to spe
 ## TODOs/Roadmap
 Things I would like to add in the future:
 - [ ] Currently the migration modelApiKey is hardcoded in the codebase, devs should be able to specify the migration modelApiKey as an option in `datocms.config.json` > "datocms-mw-config". You can than also use the datocms cma api to create a schema_migration model (or use any other name as specigied specified in the `datocms.config.json`) so the dev does not have to do this manually.
-- [ ] check if you can move values from constants.mjs to datocms.config.json > "datocms-mw-config". Also add fallback logic to use default options if some values are missing from the "datocms-mw-config" property in datocms.config.json is (do this in config.mjs).
+- [ ] check if you can move values from constants.mjs to datocms.config.json > "datocms-mw-config".
 - [ ] "allSchemaMigrations" is hardcoded in migrations.gql, this should depend on the migrationsModelApiKey as specified in datocms.config.json > "datocms-mw-config".
 - [ ] improve error handling for fetch calls (specifically those in dato-request.mjs)
 - [ ] big refactor of the codebase to get everything tidy (especially the functions in finder.mjs could be more functional - use more helper functions functies) + see todo comments in codebase

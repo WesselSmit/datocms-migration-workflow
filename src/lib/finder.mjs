@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname, extname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { errorLog } from './console.mjs'
+import { errorLog, log } from './console.mjs'
 
 
 export const APP_ROOT = (() => {
@@ -27,7 +27,12 @@ export async function getMigrationsDir() {
   let pathToMigrationsDirInDependantAppRoot = CONFIG.profiles[profileSpecifiedInConfig]?.migrations?.directory
 
   if (!pathToMigrationsDirInDependantAppRoot) {
-    pathToMigrationsDirInDependantAppRoot = CONFIG.profiles.default.migrations.directory
+    if (CONFIG.profiles.default.migrations.directory) {
+      pathToMigrationsDirInDependantAppRoot = CONFIG.profiles.default.migrations.directory
+      log(`No migrations.directory specified in profile "${profileSpecifiedInConfig}". Using migrations.directory from the "default" profile instead.`)
+    } else {
+      errorLog(`No migrations.directory specified in profile "${profileSpecifiedInConfig}" or "default".`)
+    }
   }
 
   const migrationsDirInDependantApp = join(DEPENDANT_APP_ROOT, pathToMigrationsDirInDependantAppRoot)
