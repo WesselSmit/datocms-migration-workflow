@@ -13,7 +13,9 @@ export const DEFAULT_CONFIG = {
       },
     },
   },
-  profile: 'default',
-  typescript: false,
-  jsonLogs: false,
+  'datocms-mw-config': {
+    profile: 'default',
+    typescript: false,
+    jsonLogs: false,
+  }
 }

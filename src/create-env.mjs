@@ -18,10 +18,10 @@ try {
   const { id: primaryEnvId } = await getPrimaryEnv()
   const testEnvName = `${envName}${TEST_ENV_NAME_SUFFIX}`
 
-  await datoCmd(`npx datocms environments:fork ${primaryEnvId} ${envName}`)
+  await datoCmd(`environments:fork ${primaryEnvId} ${envName}`)
   log(`Created a new datocms environment called "${envName}".`)
 
-  await datoCmd(`npx datocms environments:fork ${primaryEnvId} ${testEnvName}`)
+  await datoCmd(`environments:fork ${primaryEnvId} ${testEnvName}`)
   log(`Created a new datocms test environment called "${testEnvName}".`)
 
   setState({ currentEnv: envName })

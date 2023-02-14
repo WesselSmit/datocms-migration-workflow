@@ -59,12 +59,12 @@ try {
 
   const migrationOutputFlag = CONFIG['datocms-mw-config'].typescript ? '--ts' : '--js'
 
-  await datoCmd(`npx datocms migrations:new ${migrationName} --autogenerate=${envName}:${primaryEnvId} ${migrationOutputFlag}`)
+  await datoCmd(`migrations:new ${migrationName} --autogenerate=${envName}:${primaryEnvId} ${migrationOutputFlag}`)
   log(`Created migration for changes on "${envName}" based on "${primaryEnvId}".`)
 
-  await datoCmd(`npx datocms environments:destroy ${testEnvName}`)
-  await datoCmd(`npx datocms environments:fork ${primaryEnvId} ${testEnvName}`)
-  await datoCmd(`npx datocms migrations:run --source=${testEnvName} --in-place`)
+  await datoCmd(`environments:destroy ${testEnvName}`)
+  await datoCmd(`environments:fork ${primaryEnvId} ${testEnvName}`)
+  await datoCmd(`migrations:run --source=${testEnvName} --in-place`)
   log(`Re-created the "${testEnvName}" environment and applied all pending migrations.`)
   log(`You can now test your changes on the "${testEnvName}" environment.`)
 } catch(error) {

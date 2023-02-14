@@ -18,6 +18,10 @@ export const config = (async () => {
   const mergedConfiguration = {
     ...DEFAULT_CONFIG,
     ...configuration,
+    'datocms-mw-config': {
+      ...DEFAULT_CONFIG['datocms-mw-config'],
+      ...configuration['datocms-mw-config'],
+    }
   }
 
   return mergedConfiguration

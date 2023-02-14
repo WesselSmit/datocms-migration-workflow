@@ -19,7 +19,7 @@ export default async function datoCmd(cmd) {
   const profileFlag = `--profile=${CONFIG['datocms-mw-config'].profile}`
   const jsonFlag = CONFIG['datocms-mw-config'].jsonLogs ? '--json' : ''
 
-  const fullCmd = `${cmd} ${jsonFlag} ${profileFlag} ${apiTokenArg}`
+  const fullCmd = `npx datocms ${cmd} ${jsonFlag} ${profileFlag} ${apiTokenArg}`
 
   return new Promise((resolve, reject) => {
     exec(
