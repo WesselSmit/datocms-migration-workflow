@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { args } from './lib/cli.mjs'
+import { params } from './lib/cli.mjs'
 import { log, errorLog } from './lib/console.mjs'
 import datoCmd from './lib/dato-cmd.mjs'
 import { getPrimaryEnv } from './lib/dato-env.mjs'
@@ -8,7 +8,7 @@ import { setState } from './lib/state-helpers.mjs'
 import { TEST_ENV_NAME_SUFFIX } from './lib/constants.mjs'
 
 
-const [envName] = args
+const [envName] = params?.args
 
 if (!envName) {
   errorLog('You must specify a name to create a new datocms environment for.')

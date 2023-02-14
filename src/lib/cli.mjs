@@ -1,13 +1,26 @@
 import { argv, exit } from 'node:process'
+import parser from 'yargs-parser'
 import { errorLog } from './console.mjs'
 import { DEFAULT_EXIT_CODE } from './constants.mjs'
 
 
-export const args = (() => {
-  const args = argv.slice(2)
-  const normalisedArgs = args.map(arg => normaliseCliArgs(arg))
+export const params = (() => {
+  const { _: args, ...flags } = parser(argv.slice(2))
+  const normalisedArgs = args.map(arg => normaliseCliParams(arg))
+  const normalisedFlags = Object
+    .entries(flags)
+    .map(([flag, value]) => {
+      if (typeof value === 'string') {
+        return { [flag]: normaliseCliParams(value) }
+      } else {
+        return { [flag]: value }
+      }
+    })
 
-  return normalisedArgs
+  return {
+    args: normalisedArgs,
+    flags: normalisedFlags,
+  }
 })()
 
 export function stop(code = DEFAULT_EXIT_CODE) {
@@ -15,14 +28,14 @@ export function stop(code = DEFAULT_EXIT_CODE) {
 }
 
 
-function normaliseCliArgs(string) {
-  const allowedCharsRegex = /^[a-zA-Z0-9-]*$/
+function normaliseCliParams(string) {
+  const allowedCharsRegex = /^[a-zA-Z0-9-=]*$/
   const normalisedString = string
+    .trim()
     .replaceAll(' ', '-')
-    .toLowerCase()
 
   if (!allowedCharsRegex.test(normalisedString)) {
-    errorLog(`The received arg "${string}" contains invalid chars.`)
+    errorLog(`The received param "${string}" contains invalid chars.`)
     stop()
   }
 

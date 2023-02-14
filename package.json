@@ -26,6 +26,7 @@
   "dependencies": {
     "@datocms/cli": "^1.0.22",
     "dotenv-safe": "^8.2.0",
-    "node-fetch": "^3.3.0"
+    "node-fetch": "^3.3.0",
+    "yargs-parser": "^21.1.1"
   }
 }

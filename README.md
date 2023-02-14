@@ -209,14 +209,14 @@ This shows more advanced usage, but in the most basic usage you only have to spe
 
 ## TODOs/Roadmap
 Things I would like to add in the future:
-- [] support for profiles (currently the default profile is always used) in datocms.config.json > "profiles"
-- [] Currently the migration modelApiKey is hardcoded in the codebase, devs should be able to specify the migration modelApiKey as an option in `datocms.config.json` > "datocms-mw-config". You can than also use the datocms cma api to create a schema_migration model (or use any other name as specigied specified in the `datocms.config.json`) so the dev does not have to do this manually.
-- [] check if you can move values from constants.mjs to datocms.config.json > "datocms-mw-config". Also add fallback logic to use default options if some values are missing from the "datocms-mw-config" property in datocms.config.json is (do this in config.mjs).
-- [] "allSchemaMigrations" is hardcoded in migrations.gql, this should depend on the migrationsModelApiKey as specified in datocms.config.json > "datocms-mw-config".
-- [] improve error handling for fetch calls (specifically those in dato-request.mjs)
-- [] big refactor of the codebase to get everything tidy (especially the functions in finder.mjs could be more functional - use more helper functions functies) + see todo comments in codebase
-- [] read through entire readme and make sure: it is up to date with the latest changes + it is easy to understand + it does not have any typos.
-- [] release as v1.1.0 on npm.
-- [] add a test directory where this package is loaded as a dependency and the commands can easily be tested
-- [] rewrite entire project in typescript.
+- [ ] support for profiles (currently the default profile is always used) in datocms.config.json > "profiles"
+- [ ] Currently the migration modelApiKey is hardcoded in the codebase, devs should be able to specify the migration modelApiKey as an option in `datocms.config.json` > "datocms-mw-config". You can than also use the datocms cma api to create a schema_migration model (or use any other name as specigied specified in the `datocms.config.json`) so the dev does not have to do this manually.
+- [ ] check if you can move values from constants.mjs to datocms.config.json > "datocms-mw-config". Also add fallback logic to use default options if some values are missing from the "datocms-mw-config" property in datocms.config.json is (do this in config.mjs).
+- [ ] "allSchemaMigrations" is hardcoded in migrations.gql, this should depend on the migrationsModelApiKey as specified in datocms.config.json > "datocms-mw-config".
+- [ ] improve error handling for fetch calls (specifically those in dato-request.mjs)
+- [ ] big refactor of the codebase to get everything tidy (especially the functions in finder.mjs could be more functional - use more helper functions functies) + see todo comments in codebase
+- [ ] read through entire readme and make sure: it is up to date with the latest changes + it is easy to understand + it does not have any typos.
+- [ ] release as v1.1.0 on npm.
+- [ ] add a test directory where this package is loaded as a dependency and the commands can easily be tested
+- [ ] rewrite entire project in typescript.
 
