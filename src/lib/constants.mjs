@@ -13,5 +13,7 @@ export const DEFAULT_CONFIG = {
       },
     },
   },
+  profile: 'default',
   typescript: false,
+  jsonLogs: false,
 }

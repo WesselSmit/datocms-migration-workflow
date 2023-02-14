@@ -16,8 +16,10 @@ if (DATOCMS_API_TOKEN === undefined) {
 
 export default async function datoCmd(cmd) {
   const apiTokenArg = `--api-token=${DATOCMS_API_TOKEN}`
-  const jsonFlag = CONFIG['datocms-mw-config']?.logJsonOutput ? '--json' : ''
-  const fullCmd = `${cmd} ${apiTokenArg} ${jsonFlag}`
+  const profileFlag = `--profile=${CONFIG['datocms-mw-config'].profile}`
+  const jsonFlag = CONFIG['datocms-mw-config'].jsonLogs ? '--json' : ''
+
+  const fullCmd = `${cmd} ${jsonFlag} ${profileFlag} ${apiTokenArg}`
 
   return new Promise((resolve, reject) => {
     exec(

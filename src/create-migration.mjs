@@ -57,7 +57,7 @@ try {
     })
   }
 
-  const migrationOutputFlag = CONFIG['datocms-mw-config']?.typescript ? '--ts' : '--js'
+  const migrationOutputFlag = CONFIG['datocms-mw-config'].typescript ? '--ts' : '--js'
 
   await datoCmd(`npx datocms migrations:new ${migrationName} --autogenerate=${envName}:${primaryEnvId} ${migrationOutputFlag}`)
   log(`Created migration for changes on "${envName}" based on "${primaryEnvId}".`)
