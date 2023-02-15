@@ -5,7 +5,7 @@ import { extname, resolve } from 'node:path'
 import { args } from './lib/cli.mjs'
 import { log, errorLog } from './lib/console.mjs'
 import datoCmd from './lib/dato-cmd.mjs'
-import { getPrimaryEnv, getAppliedMigrationsForEnv } from './lib/dato-env.mjs'
+import { getAppliedMigrationsForEnv, getEnvs, getPrimaryEnv } from './lib/dato-env.mjs'
 import { getState } from './lib/state-helpers.mjs'
 import { getMigrationsDir } from './lib/finder.mjs'
 import { config, createTempConfigFile, deleteTempConfigFile } from './lib/config.mjs'
@@ -64,7 +64,12 @@ try {
   await datoCmd(`migrations:new ${migrationName} --autogenerate=${envName}:${primaryEnvId} ${migrationOutputFlag}`)
   log(`Created migration for changes on "${envName}" based on "${primaryEnvId}".`)
 
-  await datoCmd(`environments:destroy ${testEnvName}`)
+  const environments = await getEnvs()
+
+  if (environments.includes(testEnvName)) {
+    await datoCmd(`environments:destroy ${testEnvName}`)
+  }
+
   await datoCmd(`environments:fork ${primaryEnvId} ${testEnvName}`)
   await datoCmd(`migrations:run --source=${testEnvName} --in-place`)
   log(`Re-created the "${testEnvName}" environment and applied all pending migrations.`)
