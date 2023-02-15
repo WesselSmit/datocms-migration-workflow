@@ -5,7 +5,7 @@ import { log, errorLog } from './lib/console.mjs'
 import datoCmd from './lib/dato-cmd.mjs'
 import { getPrimaryEnv } from './lib/dato-env.mjs'
 import { setState } from './lib/state-helpers.mjs'
-import { config, createTempConfigFile, deleteTempConfigFile } from './lib/config.mjs'
+import { config } from './lib/config.mjs'
 
 
 const [envName] = args
@@ -16,7 +16,6 @@ if (!envName) {
 }
 
 try {
-  createTempConfigFile()
   const { id: primaryEnvId } = await getPrimaryEnv()
   const testEnvName = `${envName}${CONFIG['datocms-mw-config'].testEnvSuffix}`
 
@@ -27,8 +26,6 @@ try {
   log(`Created a new datocms test environment called "${testEnvName}".`)
 
   setState({ currentEnv: envName })
-} catch (error) {
+} catch(error) {
   errorLog(error)
-} finally {
-  deleteTempConfigFile()
 }

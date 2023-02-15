@@ -1,5 +1,5 @@
 import { existsSync } from 'node:fs'
-import { readFileFromDependantAppRoot, writeFileToDependantAppRoot } from './finder.mjs'
+import { readFileFromDependantAppRoot, writeJsFileToDependantAppRoot } from './finder.mjs'
 import { STATE_FILE_NAME } from './constants.mjs'
 
 
@@ -21,14 +21,14 @@ export function setState(newState) {
     initState()
   }
 
-  writeFileToDependantAppRoot(STATE_FILE_NAME, newState)
+  writeJsFileToDependantAppRoot(STATE_FILE_NAME, newState)
 
   return newState
 }
 
 
 function initState() {
-  writeFileToDependantAppRoot(STATE_FILE_NAME, INITIAL_STATE)
+  writeJsFileToDependantAppRoot(STATE_FILE_NAME, INITIAL_STATE)
 
   return INITIAL_STATE
 }

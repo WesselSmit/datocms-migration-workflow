@@ -1,9 +1,9 @@
-import { existsSync, writeFileSync, unlinkSync } from 'node:fs'
+import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { normaliseValue } from './cli.mjs'
-import { APP_ROOT, DEPENDANT_APP_ROOT, readFileFromDependantAppRoot } from './finder.mjs'
-import { errorLog } from './console.mjs'
-import { CONFIG_FILE_NAME, DEFAULT_CONFIG, TEMP_CONFIG_FILE_NAME } from './constants.mjs'
+import { DEPENDANT_APP_ROOT, readFileFromDependantAppRoot } from './finder.mjs'
+import { errorLog, log } from './console.mjs'
+import { CONFIG_FILE_NAME, DEFAULT_CONFIG } from './constants.mjs'
 
 
 export const config = (async () => {
@@ -14,41 +14,39 @@ export const config = (async () => {
     errorLog(`Could not find a ${CONFIG_FILE_NAME} in project root.`)
   }
 
-  const configurationFromConfigFile = await readFileFromDependantAppRoot(CONFIG_FILE_NAME)
-  const profileNameToUse = configurationFromConfigFile['datocms-mw-config'].profile ?? DEFAULT_CONFIG['datocms-mw-config'].profile
+  const configuration = await readFileFromDependantAppRoot(CONFIG_FILE_NAME)
 
   const mergedConfiguration = {
-    profile: {
-      ...DEFAULT_CONFIG.profiles[profileNameToUse],
-      ...configurationFromConfigFile.profiles[profileNameToUse],
-    },
+    ...DEFAULT_CONFIG,
+    ...configuration,
     'datocms-mw-config': {
       ...DEFAULT_CONFIG['datocms-mw-config'],
-      ...configurationFromConfigFile['datocms-mw-config'],
-    },
+      ...configuration['datocms-mw-config'],
+    }
   }
 
   mergedConfiguration['datocms-mw-config'].testEnvSuffix = normaliseValue(mergedConfiguration['datocms-mw-config'].testEnvSuffix.toLowerCase())
 
-  return mergedConfiguration
-})()
+  const profileNameSpecifiedInConfig = mergedConfiguration['datocms-mw-config'].profile
+  const profileSpecifiedInConfig = mergedConfiguration.profiles[profileNameSpecifiedInConfig]
 
 
-export function createTempConfigFile() {
-  const filePath = join(APP_ROOT, TEMP_CONFIG_FILE_NAME)
-  const fileContents = {
-    profiles: {
-      default: {
-        ...config.profile
-      }
-    }
+  const migrationsDirInSpecifiedProfile = profileSpecifiedInConfig?.migrations?.directory
+  const migrationsModelApiKeyInSpecifiedProfile = profileSpecifiedInConfig?.migrations?.modelApiKey
+
+  if (!migrationsDirInSpecifiedProfile) {
+    const migrationsDirInDefaultProfile = mergedConfiguration.profiles.default.migrations.directory
+    migrationsDirInSpecifiedProfile = migrationsDirInDefaultProfile
+
+    log(`No migrations.directory specified in profile "${profileNameSpecifiedInConfig}". Using migrations.directory "${migrationsDirInDefaultProfile}" (from the "default" profile) instead.`)
   }
 
-  writeFileSync(filePath, JSON.stringify(fileContents, null, 2), 'utf8')
-}
+  if (!migrationsModelApiKeyInSpecifiedProfile) {
+    const migrationsModelApiKeyInDefaultProfile = mergedConfiguration.profiles.default.migrations.modelApiKey
+    migrationsModelApiKeyInSpecifiedProfile = migrationsModelApiKeyInDefaultProfile
 
-export function deleteTempConfigFile() {
-  const filePath = join(APP_ROOT, TEMP_CONFIG_FILE_NAME)
+    log(`No migrations.modelApiKey specified in profile "${profileNameSpecifiedInConfig}". Using migrations.modelApiKey "${migrationsModelApiKeyInDefaultProfile}" (from the "default" profile) instead.`)
+  }
 
-  unlinkSync(filePath)
-}
+  return mergedConfiguration
+})()
