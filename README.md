@@ -23,6 +23,11 @@ The migrations can be applied in chronological order to reproduce all changes ma
 Migrations are very powerful and can help you in many ways, but they are not without their downsides; without auto-generation it requires a lot of manual work and in order to use auto-generation you need to use the datocms-cli which exposes multiple commands you'll need to remember and understand.
 That's why this library aims to simplify the auto-generation of datocms migrations for you.
 
+**Useful tips**
+- Migration files should not be gitignored.
+- Migrations should be applied in chronological order (this happens automatically).
+- It is recommended to never alter migration files or change the filenames manually.
+
 ## Setup
 
 ### Requirements
@@ -221,7 +226,7 @@ To make this easier the package exports a `datoFetch` function that tries to mak
 The main features are:
 - Fetching content from a specific datocms environment.
   - You can specify an environment in `options.env`.
-  - The package stores your most recently created environment in a file called "datocms-mw-state.mjs", it's value will be used if no value is specified in `options.env` (enabled by default, can be disabled by setting `useEnvFromState` to false).
+  - The package stores your most recently used environment in a file called "datocms-mw-state.mjs", it's value will be used if no value is specified in `options.env` (enabled by default, can be disabled by setting `useEnvFromState` to false).
 - Fetch paginated data from a field.
 - Extendable with your own variables and headers.
 
@@ -275,8 +280,7 @@ This shows more advanced usage, but in the most basic usage you only have to spe
 
 ## TODOs/Roadmap
 Things I would like to add in the future:
-- [ ] Currently the migration modelApiKey is hardcoded in the codebase, devs should be able to specify the migration modelApiKey as an option in `datocms.config.json` > "datocms-mw-config". You can than also use the datocms cma api to create a schema_migration model (or use any other name as specified in the `datocms.config.json`) so the dev does not have to do this manually.
-- [ ] "allSchemaMigrations" is hardcoded in migrations.gql, this should depend on the migrationsModelApiKey as specified in datocms.config.json > "datocms-mw-config".
+- [ ] "allSchemaMigrations" is hardcoded in migrations.gql + 'const { allSchemaMigrations } = await datoContentRequest(query, {' is hardcoded in lib/dato-env.mjs, these should depend on the migrationsModelApiKey as specified in datocms.config.json > "datocms-mw-config".
 - [ ] the messages that inform the user which config options/state is used should be a different color to be more noticable -- everywhere where config/state is used.
 - [ ] improve error handling for fetch calls (specifically those in dato-request.mjs)
 - [ ] big refactor of the codebase to get everything tidy (especially config.mjs + the functions in finder.mjs could be more functional - use more helper functions functies) + see todo comments in codebase

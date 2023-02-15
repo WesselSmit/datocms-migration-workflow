@@ -6,7 +6,7 @@ import { args } from './lib/cli.mjs'
 import { log, errorLog } from './lib/console.mjs'
 import datoCmd from './lib/dato-cmd.mjs'
 import { getAppliedMigrationsForEnv, getEnvs, getPrimaryEnv } from './lib/dato-env.mjs'
-import { getState } from './lib/state-helpers.mjs'
+import { getState, setState } from './lib/state-helpers.mjs'
 import { getMigrationsDir } from './lib/finder.mjs'
 import { config } from './lib/config.mjs'
 import { STATE_FILE_NAME } from './lib/constants.mjs'
@@ -21,7 +21,9 @@ if (!migrationName) {
   errorLog('You must specify a name for the new migration.')
 }
 
-if (!envNameFromCli) {
+if (envNameFromCli) {
+  setState({ currentEnv: envNameFromCli })
+} else {
   const { currentEnv: envNameFromState } = await getState()
 
   if (envNameFromState) {
