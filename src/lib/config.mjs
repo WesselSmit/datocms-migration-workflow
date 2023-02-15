@@ -27,24 +27,25 @@ export const config = (async () => {
 
   mergedConfiguration['datocms-mw-config'].testEnvSuffix = normaliseValue(mergedConfiguration['datocms-mw-config'].testEnvSuffix.toLowerCase())
 
+  if (mergedConfiguration['datocms-mw-config'].testEnvSuffix === '') {
+    mergedConfiguration['datocms-mw-config'].testEnvSuffix = DEFAULT_CONFIG['datocms-mw-config'].testEnvSuffix
+  }
+
   const profileNameSpecifiedInConfig = mergedConfiguration['datocms-mw-config'].profile
   const profileSpecifiedInConfig = mergedConfiguration.profiles[profileNameSpecifiedInConfig]
 
-  const migrationsDirInSpecifiedProfile = profileSpecifiedInConfig?.migrations?.directory
-  const migrationsModelApiKeyInSpecifiedProfile = profileSpecifiedInConfig?.migrations?.modelApiKey
+  if (!profileSpecifiedInConfig?.migrations?.directory) {
+    const fallbackMigrationsDirectory = mergedConfiguration.profiles.default.migrations.directory
+    mergedConfiguration.profiles[profileNameSpecifiedInConfig].migrations.directory = fallbackMigrationsDirectory
 
-  if (!migrationsDirInSpecifiedProfile) {
-    const migrationsDirInDefaultProfile = mergedConfiguration.profiles.default.migrations.directory
-    migrationsDirInSpecifiedProfile = migrationsDirInDefaultProfile
-
-    log(`No migrations.directory specified in profile "${profileNameSpecifiedInConfig}". Using migrations.directory "${migrationsDirInDefaultProfile}" (from the "default" profile) instead.`)
+    log(`No migrations.directory specified in profile "${profileNameSpecifiedInConfig}". Using migrations.directory "${fallbackMigrationsDirectory}" (from the "default" profile) instead.`)
   }
 
-  if (!migrationsModelApiKeyInSpecifiedProfile) {
-    const migrationsModelApiKeyInDefaultProfile = mergedConfiguration.profiles.default.migrations.modelApiKey
-    migrationsModelApiKeyInSpecifiedProfile = migrationsModelApiKeyInDefaultProfile
+  if (!profileSpecifiedInConfig?.migrations?.modelApiKey) {
+    const fallbackMigrationsModelApiKey = mergedConfiguration.profiles.default.migrations.modelApiKey
+    mergedConfiguration.profiles[profileNameSpecifiedInConfig].migrations.modelApiKey = fallbackMigrationsModelApiKey
 
-    log(`No migrations.modelApiKey specified in profile "${profileNameSpecifiedInConfig}". Using migrations.modelApiKey "${migrationsModelApiKeyInDefaultProfile}" (from the "default" profile) instead.`)
+    log(`No migrations.modelApiKey specified in profile "${profileNameSpecifiedInConfig}". Using migrations.modelApiKey "${fallbackMigrationsModelApiKey}" (from the "default" profile) instead.`)
   }
 
   return mergedConfiguration
