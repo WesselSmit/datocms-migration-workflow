@@ -4,3 +4,6 @@ node_modules
 
 # OS
 .DS_Store
+
+# state
+temp_datocms.config.json

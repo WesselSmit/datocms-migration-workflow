@@ -3,7 +3,8 @@ import { join } from 'node:path'
 import * as dotenv from 'dotenv-safe'
 import { logInColor, errorLog } from './console.mjs'
 import { config } from './config.mjs'
-import { APP_ROOT, TEMP_CONFIG_FILE_NAME } from './constants.mjs'
+import { APP_ROOT } from './finder.mjs'
+import { TEMP_CONFIG_FILE_NAME } from './constants.mjs'
 
 
 dotenv.config()
