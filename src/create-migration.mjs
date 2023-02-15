@@ -66,7 +66,7 @@ try {
 
   const environments = await getEnvs()
 
-  if (environments.includes(testEnvName)) {
+  if (environments.some(env => env.id === testEnvName)) {
     await datoCmd(`environments:destroy ${testEnvName}`)
   }
 

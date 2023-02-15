@@ -30,7 +30,6 @@ export const config = (async () => {
   const profileNameSpecifiedInConfig = mergedConfiguration['datocms-mw-config'].profile
   const profileSpecifiedInConfig = mergedConfiguration.profiles[profileNameSpecifiedInConfig]
 
-
   const migrationsDirInSpecifiedProfile = profileSpecifiedInConfig?.migrations?.directory
   const migrationsModelApiKeyInSpecifiedProfile = profileSpecifiedInConfig?.migrations?.modelApiKey
 
