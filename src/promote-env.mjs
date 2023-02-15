@@ -35,6 +35,6 @@ try {
   // todo the following 2 options/features should be done if the users specifies so in the datocms.config.json > datocms-mw-config
   // todo - delete the previous/old primary env from datocms
   // todo - delete the previous/old non-primary envs from datocms (e.g. the one you created when running the 'npx datocms:create-env' script)
-} catch(error) {
+} catch (error) {
   errorLog(error)
 }

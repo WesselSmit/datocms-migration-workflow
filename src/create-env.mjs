@@ -26,6 +26,6 @@ try {
   log(`Created a new datocms test environment called "${testEnvName}".`)
 
   setState({ currentEnv: envName })
-} catch(error) {
+} catch (error) {
   errorLog(error)
 }
