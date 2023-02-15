@@ -81,7 +81,7 @@ The generated migration files should be included in your version control system,
 ### Custom configuration
 You can configure the library by adding a `datocms-mw-config` property in the `datocms.config.json` file in the root of your project.
 
-The following json is not only an example, but also the 'standard configuration':
+The json below is not only an example, but also the 'standard configuration':
 
 ```json
 {
@@ -118,9 +118,7 @@ _¹ [https://community.datocms.com/t/migration-error/3639/2](https://community.d
 
 To ensure the package has a config file it can work with, a few safeguards are used:
 1. Options in the `datocms.config.json` are used if they are present.
-2. If some options are missing in the `datocms.config.json` file, the package will use the 'standard configuration' (also see the ['standard configuration'](#custom-configuration)).
-3. If the specified profile is incomplete, the package will substitute the missing options with options from the `default` profile.
-4. If the profile is still not complete after using the `default` profile to substitute from, the package will use the missing options from the 'standard configuration' (also see the ['standard configuration'](#custom-configuration)).
+2. If options are missing or the specified profile is incomplete, the package will substitute the options/values with the options/values from the 'standard configuration' (also see the ['standard configuration'](#custom-configuration)).
 
 ## Workflow
 You can read up on the recommended workflow, that this wrapper library implements, in the [official datocms documentation](https://www.datocms.com/docs/scripting-migrations/safe-iterations-using-environments). This library has simplified these steps into 3 commands.
