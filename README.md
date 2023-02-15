@@ -58,6 +58,8 @@ This library requires a `datocms.config.json` file in the root of your project w
 }
 ```
 
+> NOTE: `profiles[<profile>].migrations.modelApiKey` is currently not supported and should always be set to `schema_migration`.
+
 This is necessary because this library is a wrapper and uses `@datocms/cli` under the hood, see their official documentation for more info [@datocms/cli docs](https://github.com/datocms/cli/tree/main/packages/cli) and [datocms: configuring the cli](https://www.datocms.com/docs/scripting-migrations/installing-the-cli#setting-up-a-cli-profile).
 
 > You can also add optional configuration to the `datocms.config.json` file to change the behaviour of `datocms-migration-workflow`, see [Custom configuration](#custom-configuration).
@@ -124,6 +126,8 @@ _¹ [https://community.datocms.com/t/migration-error/3639/2](https://community.d
 To ensure the package has a config file it can work with, a few safeguards are used:
 1. Options in the `datocms.config.json` are used if they are present.
 2. If options are missing or the specified profile is incomplete, the package will substitute the options/values with the options/values from the 'standard configuration' (also see the ['standard configuration'](#custom-configuration)).
+
+> NOTE: `profiles[<profile>].migrations.modelApiKey` is currently not supported and should always be set to `schema_migration`.
 
 ## Workflow
 You can read up on the recommended workflow, that this wrapper library implements, in the [official datocms documentation](https://www.datocms.com/docs/scripting-migrations/safe-iterations-using-environments). This library has simplified these steps into 3 commands.
