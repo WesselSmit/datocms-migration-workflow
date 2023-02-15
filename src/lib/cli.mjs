@@ -1,6 +1,5 @@
 import { argv, exit } from 'node:process'
 import { errorLog } from './console.mjs'
-import { DEFAULT_EXIT_CODE } from './constants.mjs'
 
 
 export const args = (() => {
@@ -10,8 +9,8 @@ export const args = (() => {
   return normalisedArgs
 })()
 
-export function stop(code = DEFAULT_EXIT_CODE) {
-  exit(code)
+export function stop() {
+  exit(1)
 }
 
 

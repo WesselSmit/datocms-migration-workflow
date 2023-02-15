@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname, extname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { errorLog, log } from './console.mjs'
+import { errorLog } from './console.mjs'
 
 
 export const APP_ROOT = (() => {
@@ -23,19 +23,10 @@ export async function getMigrationsDir() {
   const { config } = await import('./config.mjs')
   const CONFIG = await config
 
-  const profileSpecifiedInConfig = CONFIG['datocms-mw-config'].profile
-  let pathToMigrationsDirInDependantAppRoot = CONFIG.profiles[profileSpecifiedInConfig]?.migrations?.directory
-
-  if (!pathToMigrationsDirInDependantAppRoot) {
-    if (CONFIG.profiles.default.migrations.directory) {
-      pathToMigrationsDirInDependantAppRoot = CONFIG.profiles.default.migrations.directory
-      log(`No migrations.directory specified in profile "${profileSpecifiedInConfig}". Using migrations.directory from the "default" profile instead.`)
-    } else {
-      errorLog(`No migrations.directory specified in profile "${profileSpecifiedInConfig}" or "default".`)
-    }
-  }
-
+  const profile = CONFIG['datocms-mw-config'].profile
+  const pathToMigrationsDirInDependantAppRoot = CONFIG.profiles[profile].migrations.directory
   const migrationsDirInDependantApp = join(DEPENDANT_APP_ROOT, pathToMigrationsDirInDependantAppRoot)
+
   return migrationsDirInDependantApp
 }
 

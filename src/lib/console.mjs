@@ -1,7 +1,6 @@
 import { stdin, stdout } from 'node:process'
 import { createInterface } from 'node:readline'
 import { stop } from './cli.mjs'
-import { DEFAULT_EXIT_CODE } from './constants.mjs'
 
 
 export function log(string) {
@@ -11,12 +10,12 @@ export function log(string) {
   print(coloredString)
 }
 
-export function errorLog(string, exitCode = DEFAULT_EXIT_CODE) {
+export function errorLog(string) {
   const prefixedString = `[ERROR] ${string}`
   const coloredString = colorString(prefixedString, 'red')
 
   print(coloredString)
-  stop(exitCode)
+  stop()
 }
 
 export function logInColor(string, color) {

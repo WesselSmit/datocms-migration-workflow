@@ -9,7 +9,7 @@ import { getPrimaryEnv, getAppliedMigrationsForEnv } from './lib/dato-env.mjs'
 import { getState } from './lib/state-helpers.mjs'
 import { getMigrationsDir } from './lib/finder.mjs'
 import { config } from './lib/config.mjs'
-import { STATE_FILE_NAME, MIGRATION_MODEL_API_KEY, TEST_ENV_NAME_SUFFIX } from './lib/constants.mjs'
+import { STATE_FILE_NAME } from './lib/constants.mjs'
 
 
 const [migrationName, envNameFromCli] = args
@@ -35,12 +35,14 @@ if (!envNameFromCli) {
 
 try {
   const { id: primaryEnvId } = await getPrimaryEnv()
-  const testEnvName = `${envName}${TEST_ENV_NAME_SUFFIX}`
+  const testEnvName = `${envName}${CONFIG['datocms-mw-config'].testEnvSuffix}`
   const migrationsDirExists = existsSync(MIGRATIONS_DIR)
 
   if (migrationsDirExists) {
     const allMigrations = readdirSync(MIGRATIONS_DIR)
-    const appliedMigrations = await getAppliedMigrationsForEnv(envName, MIGRATION_MODEL_API_KEY)
+    const profile = CONFIG['datocms-mw-config'].profile
+    const migrationModelApiKey = CONFIG.profiles[profile].migrations.modelApiKey
+    const appliedMigrations = await getAppliedMigrationsForEnv(envName, migrationModelApiKey)
 
     const unAppliedMigrations = allMigrations.filter(migration => {
       const migrationIsApplied = appliedMigrations.includes(migration)

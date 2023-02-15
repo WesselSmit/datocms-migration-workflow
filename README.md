@@ -265,8 +265,7 @@ This shows more advanced usage, but in the most basic usage you only have to spe
 
 ## TODOs/Roadmap
 Things I would like to add in the future:
-- [ ] Currently the migration modelApiKey is hardcoded in the codebase, devs should be able to specify the migration modelApiKey as an option in `datocms.config.json` > "datocms-mw-config". You can than also use the datocms cma api to create a schema_migration model (or use any other name as specigied specified in the `datocms.config.json`) so the dev does not have to do this manually.
-- [ ] check if you can move values from constants.mjs to datocms.config.json > "datocms-mw-config".
+- [ ] Currently the migration modelApiKey is hardcoded in the codebase, devs should be able to specify the migration modelApiKey as an option in `datocms.config.json` > "datocms-mw-config". You can than also use the datocms cma api to create a schema_migration model (or use any other name as specified in the `datocms.config.json`) so the dev does not have to do this manually.
 - [ ] "allSchemaMigrations" is hardcoded in migrations.gql, this should depend on the migrationsModelApiKey as specified in datocms.config.json > "datocms-mw-config".
 - [ ] improve error handling for fetch calls (specifically those in dato-request.mjs)
 - [ ] big refactor of the codebase to get everything tidy (especially the functions in finder.mjs could be more functional - use more helper functions functies) + see todo comments in codebase
