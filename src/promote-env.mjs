@@ -4,9 +4,11 @@ import { stop } from './lib/cli.mjs'
 import { log, errorLog, promptYesNo } from './lib/console.mjs'
 import datoCmd from './lib/dato-cmd.mjs'
 import { getPrimaryEnv, createNewPrimaryEnvId } from './lib/dato-env.mjs'
+import { createTempConfigFile, deleteTempConfigFile } from './lib/config.mjs'
 
 
 try {
+  createTempConfigFile()
   const { id: currentPrimaryEnvId } = await getPrimaryEnv()
   const newPrimaryEnvId = await createNewPrimaryEnvId()
 
@@ -35,6 +37,8 @@ try {
   // todo the following 2 options/features should be done if the users specifies so in the datocms.config.json > datocms-mw-config
   // todo - delete the previous/old primary env from datocms
   // todo - delete the previous/old non-primary envs from datocms (e.g. the one you created when running the 'npx datocms:create-env' script)
-} catch(error) {
+} catch (error) {
   errorLog(error)
+} finally {
+  deleteTempConfigFile()
 }

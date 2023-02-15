@@ -8,7 +8,7 @@ import datoCmd from './lib/dato-cmd.mjs'
 import { getPrimaryEnv, getAppliedMigrationsForEnv } from './lib/dato-env.mjs'
 import { getState } from './lib/state-helpers.mjs'
 import { getMigrationsDir } from './lib/finder.mjs'
-import { config } from './lib/config.mjs'
+import { config, createTempConfigFile, deleteTempConfigFile } from './lib/config.mjs'
 import { STATE_FILE_NAME } from './lib/constants.mjs'
 
 
@@ -34,14 +34,14 @@ if (!envNameFromCli) {
 }
 
 try {
+  createTempConfigFile()
   const { id: primaryEnvId } = await getPrimaryEnv()
   const testEnvName = `${envName}${CONFIG['datocms-mw-config'].testEnvSuffix}`
   const migrationsDirExists = existsSync(MIGRATIONS_DIR)
 
   if (migrationsDirExists) {
     const allMigrations = readdirSync(MIGRATIONS_DIR)
-    const profile = CONFIG['datocms-mw-config'].profile
-    const migrationModelApiKey = CONFIG.profiles[profile].migrations.modelApiKey
+    const migrationModelApiKey = CONFIG.profile.migrations.modelApiKey
     const appliedMigrations = await getAppliedMigrationsForEnv(envName, migrationModelApiKey)
 
     const unAppliedMigrations = allMigrations.filter(migration => {
@@ -69,6 +69,8 @@ try {
   await datoCmd(`migrations:run --source=${testEnvName} --in-place`)
   log(`Re-created the "${testEnvName}" environment and applied all pending migrations.`)
   log(`You can now test your changes on the "${testEnvName}" environment.`)
-} catch(error) {
+} catch (error) {
   errorLog(error)
+} finally {
+  deleteTempConfigFile()
 }

@@ -23,8 +23,7 @@ export async function getMigrationsDir() {
   const { config } = await import('./config.mjs')
   const CONFIG = await config
 
-  const profile = CONFIG['datocms-mw-config'].profile
-  const pathToMigrationsDirInDependantAppRoot = CONFIG.profiles[profile].migrations.directory
+  const pathToMigrationsDirInDependantAppRoot = CONFIG.profile.migrations.directory
   const migrationsDirInDependantApp = join(DEPENDANT_APP_ROOT, pathToMigrationsDirInDependantAppRoot)
 
   return migrationsDirInDependantApp
@@ -59,7 +58,7 @@ export async function readFileFromDependantAppRoot(filename) {
   const fileExtension = extname(filename)
 
   if (!fileExtension) {
-    errorLog(`No file extension provided.`)
+    errorLog(`No file extension provided in "${filename}".`)
   }
 
   const filePath = join(DEPENDANT_APP_ROOT, filename)
@@ -80,11 +79,33 @@ export async function readFileFromDependantAppRoot(filename) {
   return importedFileContents
 }
 
-export function writeJsFileToDependantAppRoot(filename, content) {
-  const filePath = findFileInDependantAppRoot(filename)
-  const contentJsString = `export default ${JSON.stringify(content, null, 2)}`
+export function writeFileToDependantAppRoot(filename, content) {
+  if (!filename) {
+    errorLog(`No filename provided.`)
+  }
 
-  writeFileSync(filePath, contentJsString, 'utf8')
+  const fileExtension = extname(filename)
+
+  if (!fileExtension) {
+    errorLog(`No file extension provided in "${filename}".`)
+  }
+
+  const filePath = findFileInDependantAppRoot(filename)
+  let fileContents
+
+  switch (fileExtension) {
+    case '.js':
+    case '.mjs':
+      fileContents = `export default ${JSON.stringify(content, null, 2)}`
+      break
+    case '.json':
+      fileContents = JSON.stringify(content, null, 2)
+      break
+    default:
+      errorLog(`No import support for "${fileExtension}" files.`)
+  }
+
+  writeFileSync(filePath, fileContents, 'utf8')
 }
 
 

@@ -1,7 +1,9 @@
 import { exec } from 'node:child_process'
+import { join } from 'node:path'
 import * as dotenv from 'dotenv-safe'
 import { logInColor, errorLog } from './console.mjs'
 import { config } from './config.mjs'
+import { APP_ROOT, TEMP_CONFIG_FILE_NAME } from './constants.mjs'
 
 
 dotenv.config()
@@ -16,10 +18,10 @@ if (DATOCMS_API_TOKEN === undefined) {
 
 export default async function datoCmd(cmd) {
   const apiTokenArg = `--api-token=${DATOCMS_API_TOKEN}`
-  const profileFlag = `--profile=${CONFIG['datocms-mw-config'].profile}`
+  const configFileArg = `--config-file=${join(APP_ROOT, TEMP_CONFIG_FILE_NAME)}`
   const jsonFlag = CONFIG['datocms-mw-config'].jsonLogs ? '--json' : ''
 
-  const fullCmd = `npx datocms ${cmd} ${jsonFlag} ${profileFlag} ${apiTokenArg}`
+  const fullCmd = `npx datocms ${cmd} ${jsonFlag} ${configFileArg} ${apiTokenArg}`
 
   return new Promise((resolve, reject) => {
     exec(
