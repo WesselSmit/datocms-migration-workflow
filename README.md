@@ -230,7 +230,7 @@ To make this easier the package exports a `datoFetch` function that tries to mak
 The main features are:
 - Fetching content from a specific datocms environment.
   - You can specify an environment in `options.env`.
-  - The package stores your most recently used environment in a file called "datocms-mw-state.mjs", it's value will be used if no value is specified in `options.env` (enabled by default, can be disabled by setting `useEnvFromState` to false).
+  - The package stores your most recently used environment in a file called "datocms-mw-state.mjs", it's value will be used if no value is specified in `options.env` (enabled by default, can be disabled by setting `options.useState` to `false`).
 - Fetch paginated data from a field.
 - Extendable with your own variables and headers.
 
@@ -258,7 +258,7 @@ const options = {
 }
 
 try {
-  const data = await datoFetch(query, options, true)
+  const data = await datoFetch(query, options)
   console.log(data)
 } catch (error) {
   console.error(error)
@@ -273,13 +273,13 @@ This shows more advanced usage, but in the most basic usage you only have to spe
 | Argument | Description | Default value | Required | Usage notes |
 |---|---|---|---|---|
 | `query` | GraphQL query used to fetch data form datocms | null | true | Expects a string. |
-| `options.env` | Datocms environment to fetch data from. | datocms primary env | false | If omitted, uses state from `datocms-mw-state.mjs` unless disabled with `useEnvFromState` |
+| `options.env` | Datocms environment to fetch data from. | datocms primary env | false | If omitted, uses state from `datocms-mw-state.mjs` unless disabled with `options.useState` set to `false` |
 | `options.vars` | Your custom variables to use in the fetch call. | {} | false | Uses `JSON.stringify()` to include variables. |
 | `options.paginatedFieldName` | Name of field to fetch data from paginated. | "" | false | Expects a string, has a max of 1 field name at the moment. |
 | `options.headers` | Your custom headers to use in the fetch call. | {} | true | Only the `options.headers.Authorization` is required. |
-| `useEnvFromState` | Disable using `datocms-mw-state.mjs` state in fetch call. | true | false | Only uses env from state if `options.env` is not specified. |
+| `options.useState` | Disable using `datocms-mw-state.mjs` state in fetch call. | true | false | Only uses env from state if `options.env` is not specified. |
 
-> `datoFetch()` expects a query as string. A common approach for this is storing queries in `template literals` or reading `.graphql|.gql` files.
+> `datoFetch(query, options)` expects a query as string. A common approach for this is storing queries in `template literals` or reading `.graphql|.gql` files.
 
 
 ## TODOs/Roadmap
@@ -292,4 +292,3 @@ Things I would like to add in the future:
 - [ ] release as v1.1.0 on npm.
 - [ ] add a test directory where this package is loaded as a dependency and the commands can easily be tested (this should also note you cannot 'use npm' to test as some functions in finder.mjs will error --> a good solution for this is still necessary)
 - [ ] rewrite entire project in typescript.
-
