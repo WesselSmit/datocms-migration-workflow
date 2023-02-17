@@ -273,11 +273,11 @@ This shows more advanced usage, but in the most basic usage you only have to spe
 | Argument | Description | Default value | Required | Usage notes |
 |---|---|---|---|---|
 | `query` | GraphQL query used to fetch data form datocms | null | true | Expects a string. |
+| `options.headers` | Your custom headers to use in the fetch call. | {} | true | Only the `options.headers.Authorization` is required. |
 | `options.env` | Datocms environment to fetch data from. | datocms primary env | false | If omitted, uses state from `datocms-mw-state.mjs` unless disabled with `options.useState` set to `false` |
 | `options.vars` | Your custom variables to use in the fetch call. | {} | false | Uses `JSON.stringify()` to include variables. |
 | `options.paginatedFieldName` | Name of field to fetch data from paginated. | "" | false | Expects a string, has a max of 1 field name at the moment. |
-| `options.headers` | Your custom headers to use in the fetch call. | {} | true | Only the `options.headers.Authorization` is required. |
-| `options.useState` | Disable using `datocms-mw-state.mjs` state in fetch call. | true | false | Only uses env from state if `options.env` is not specified. |
+| `options.disableState` | Disable using `datocms-mw-state.mjs` state in fetch call. | false | false | Only uses env from state if `options.env` is not specified. |
 
 > `datoFetch(query, options)` expects a query as string. A common approach for this is storing queries in `template literals` or reading `.graphql|.gql` files.
 

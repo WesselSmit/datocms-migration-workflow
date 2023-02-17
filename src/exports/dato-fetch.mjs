@@ -13,7 +13,7 @@ export default async function datoFetch(query, options) {
       ...options.headers,
       'X-Environment': options.env,
     }
-  } else if (options?.useState) {
+  } else if (options?.useState || options?.useState == null) {
     const { currentEnv: envFromState } = await getState()
 
     if (envFromState) {
