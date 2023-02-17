@@ -236,7 +236,7 @@ The main features are:
 
 ### Usage
 ```js
-import datoFetch from 'datocms-migration-workflow'
+import { datoFetch } from 'datocms-migration-workflow'
 
 const DATOCMS_API_TOKEN = *...*
 const query = `query translations($skip: IntType, $locale: SiteLocale) {
@@ -279,7 +279,7 @@ This shows more advanced usage, but in the most basic usage you only have to spe
 | `options.headers` | Your custom headers to use in the fetch call. | {} | true | Only the `options.headers.Authorization` is required. |
 | `options.useState` | Disable using `datocms-mw-state.mjs` state in fetch call. | true | false | Only uses env from state if `options.env` is not specified. |
 
-> `datoFetch(query, options)` expects a query as string. A common approach for this is storing queries in `template literals` or reading `.graphql|.gql` files.
+> `datoFetch()` expects a query as string. A common approach for this is storing queries in `template literals` or reading `.graphql|.gql` files.
 
 
 ## TODOs/Roadmap
