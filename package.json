@@ -1,6 +1,6 @@
 {
   "name": "datocms-migration-workflow",
-  "version": "1.0.50",
+  "version": "1.0.51",
   "description": "Wrapper library to automate and simplify the datocms migration workflow",
   "keywords": [
     "datocms",
@@ -17,7 +17,7 @@
   "homepage": "https://github.com/WesselSmit/datocms-migration-workflow#readme",
   "author": "Wessel Smit",
   "license": "MIT",
-  "main": "src/exports/index.mjs",
+  "main": "src/exports/dato-fetch.mjs",
   "bin": {
     "create-env": "src/create-env.mjs",
     "create-migration": "src/create-migration.mjs",
