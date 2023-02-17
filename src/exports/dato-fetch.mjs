@@ -10,7 +10,7 @@ export default async function datoFetch(query, options, useEnvFromState = true) 
   }
 
   if (options.env) {
-    options.header = {
+    options.headers = {
       ...options.headers,
       'X-Environment': options.env,
     }
@@ -19,7 +19,7 @@ export default async function datoFetch(query, options, useEnvFromState = true) 
 
     if (envFromState) {
       console.log(`Using "${envFromState}" as datocms environment to fetch from (found in ${STATE_FILE_NAME}).\n`)
-      options.header = {
+      options.headers = {
         ...options.headers,
         'X-Environment': envFromState,
       }
