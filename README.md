@@ -253,7 +253,7 @@ const options = {
   }
   paginatedFieldName: 'allTranslations',
   headers: {
-    Authorization: `Bearer ${DATOCMS_API_TOKEN}}`
+    Authorization: `Bearer ${DATOCMS_API_TOKEN}`
   }
 }
 

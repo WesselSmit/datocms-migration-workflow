@@ -26,7 +26,7 @@ export async function datoSiteRequest(endpoint) {
         Authorization: `Bearer ${DATOCMS_API_TOKEN}`,
       },
     })
-    const { data } = await res.json()
+    const data = await res.json()
 
     return data
   } catch (error) {
