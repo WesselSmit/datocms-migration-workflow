@@ -284,6 +284,7 @@ This shows more advanced usage, but in the most basic usage you only have to spe
 
 ## TODOs/Roadmap
 Things I would like to add in the future:
+- [ ] give credits & thanks to De Voorhoede for making it possible to work on and develop this package.
 - [ ] "allSchemaMigrations" is hardcoded in migrations.gql + 'const { allSchemaMigrations } = await datoContentRequest(query, {' is hardcoded in lib/dato-env.mjs, these should depend on the migrationsModelApiKey as specified in datocms.config.json > "datocms-mw-config".
 - [ ] the messages that inform the user which config options/state is used should be a different color to be more noticable -- everywhere where config/state is used.
 - [ ] improve error handling for fetch calls (specifically those in dato-request.mjs)
