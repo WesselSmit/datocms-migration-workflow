@@ -1,24 +1,18 @@
-import { IncomingHttpHeaders } from 'node:http'
-
 type Options = {
-  headers: IncomingHttpHeaders & DatocmsHeaderOptions,
-  env?: string,
-  vars?: GraphqlVarOptions,
-  paginatedFieldName?: string,
-  disableState?: boolean,
+  headers: DatocmsHeaderOptions;
+  env?: string;
+  vars?: GraphqlVarOptions;
+  paginatedFieldName?: string;
+  disableState?: boolean;
 }
 
 type DatocmsHeaderOptions = {
-  Authorization: string,
-  'X-Environment'?: string,
+  [key: string]: string;
+  Authorization: string;
 }
 
 type GraphqlVarOptions = {
-  [key: string]: string | number | boolean,
+  [key: string]: string | number | boolean;
 }
 
-type ApiResponse =
-  | { data: unknown }
-  | { error: Error }
-
-export default function datoFetch(query: string, options: Options): Promise<ApiResponse>;
+export default function datoFetch(query: string, options: Options): Promise<unknown>;

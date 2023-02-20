@@ -28,17 +28,11 @@ export default async function datoFetch(query, options) {
     }
   }
 
-  try {
-    const { data, errors } = await datoContentRequest(query, options)
+  const { data, errors } = await datoContentRequest(query, options)
 
-    if (errors) {
-      throw new Error(errors)
-    }
-
+  if (errors) {
+    throw new Error(errors)
+  } else {
     return data
-  } catch (error) {
-    console.error(error)
-
-    return error
   }
 }
