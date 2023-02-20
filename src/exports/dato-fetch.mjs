@@ -31,7 +31,8 @@ export default async function datoFetch(query, options) {
   const { data, errors } = await datoContentRequest(query, options)
 
   if (errors) {
-    throw new Error(errors)
+    const formattedErrors = errors.map(error => error.message)
+    throw `Errors: [${formattedErrors}]`
   } else {
     return data
   }
