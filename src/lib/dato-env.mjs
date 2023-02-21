@@ -16,21 +16,21 @@ if (DATOCMS_API_TOKEN === undefined) {
 export async function getAppliedMigrationsForEnv(env, migrationsModelApiKey) {
   const query = loadQuery('migrations')
 
-  const { allSchemaMigrations } = await datoContentRequest(query, {
+  const { data } = await datoContentRequest(query, {
     paginatedFieldName: migrationsModelApiKey,
     headers: {
       'X-Environment': env,
       Authorization: `Bearer ${DATOCMS_API_TOKEN}`,
     }
   })
-  const migrationNames = allSchemaMigrations.map(migration => migration.name)
+  const migrationNames = data.allSchemaMigrations.map(migration => migration.name)
 
   return migrationNames
 }
 
 export async function getEnvs() {
   const endpoint = 'environments'
-  const envs = await datoSiteRequest(endpoint)
+  const { data: envs } = await datoSiteRequest(endpoint)
 
   return envs
 }
