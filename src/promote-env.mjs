@@ -29,6 +29,7 @@ try {
 
   await datoCmd(`environments:promote ${newPrimaryEnvId}`)
   await datoCmd(`maintenance:off`)
+  setState({ currentEnv: newPrimaryEnvId })
 
   log(`Promotion of "${newPrimaryEnvId}" to primary environment is done.`)
   log(`The previous primary "${currentPrimaryEnvId}" environment still exists and can function as backup if a roll-back is needed.`)

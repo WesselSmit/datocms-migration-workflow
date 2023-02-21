@@ -294,3 +294,4 @@ Things I would like to add in the future:
 - [ ] release as v1.1.0 on npm.
 - [ ] add a test directory where this package is loaded as a dependency and the commands can easily be tested (this should also note you cannot 'use npm' to test as some functions in finder.mjs will error --> a good solution for this is still necessary)
 - [ ] rewrite entire project in typescript.
+- [ ] also publish this package to github package repository.
