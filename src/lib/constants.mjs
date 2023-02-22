@@ -14,6 +14,5 @@ export const DEFAULT_CONFIG = {
     profile: 'default',
     typescript: true,
     jsonLogs: true,
-    testEnvSuffix: '-test',
   }
 }

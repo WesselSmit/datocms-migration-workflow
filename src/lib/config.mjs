@@ -1,6 +1,5 @@
 import { existsSync } from 'node:fs'
 import { join } from 'node:path'
-import { normaliseValue } from './cli.mjs'
 import { DEPENDANT_APP_ROOT, readJsonFileFromDependantAppRoot } from './finder.mjs'
 import { errorLog, log } from './console.mjs'
 import { CONFIG_FILE_NAME, DEFAULT_CONFIG } from './constants.mjs'
@@ -23,12 +22,6 @@ export const config = (async () => {
       ...DEFAULT_CONFIG['datocms-mw-config'],
       ...configuration['datocms-mw-config'],
     }
-  }
-
-  mergedConfiguration['datocms-mw-config'].testEnvSuffix = normaliseValue(mergedConfiguration['datocms-mw-config'].testEnvSuffix.toLowerCase())
-
-  if (mergedConfiguration['datocms-mw-config'].testEnvSuffix === '') {
-    mergedConfiguration['datocms-mw-config'].testEnvSuffix = DEFAULT_CONFIG['datocms-mw-config'].testEnvSuffix
   }
 
   const profileNameSpecifiedInConfig = mergedConfiguration['datocms-mw-config'].profile

@@ -37,7 +37,6 @@ if (envNameFromCli) {
 
 try {
   const { id: primaryEnvId } = await getPrimaryEnv()
-  const testEnvName = `${envName}${CONFIG['datocms-mw-config'].testEnvSuffix}`
   const migrationsDirExists = existsSync(MIGRATIONS_DIR)
 
   if (migrationsDirExists) {
@@ -65,17 +64,6 @@ try {
 
   await datoCmd(`migrations:new ${migrationName} --autogenerate=${envName}:${primaryEnvId} ${migrationOutputFlag}`)
   log(`Created migration for changes on "${envName}" based on "${primaryEnvId}".`)
-
-  const environments = await getEnvs()
-
-  if (environments.some(env => env.id === testEnvName)) {
-    await datoCmd(`environments:destroy ${testEnvName}`)
-  }
-
-  await datoCmd(`environments:fork ${primaryEnvId} ${testEnvName}`)
-  await datoCmd(`migrations:run --source=${testEnvName} --in-place`)
-  log(`Re-created the "${testEnvName}" environment and applied all pending migrations.`)
-  log(`You can now test your changes on the "${testEnvName}" environment.`)
 } catch (error) {
   errorLog(error)
 }

@@ -13,7 +13,8 @@ export function stop() {
   exit(1)
 }
 
-export function normaliseValue(value) {
+
+function normaliseValue(value) {
   if (!typeof value === 'string') {
     return value
   }

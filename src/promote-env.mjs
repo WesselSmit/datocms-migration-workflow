@@ -17,6 +17,7 @@ try {
   log(`Created "${newPrimaryEnvId}" environment with all migrations applied.`)
   log(`Check your changes one last time on the "${newPrimaryEnvId}" environment.`)
   log(`When you have checked the changes, confirm whether you want to continue the promotion.`)
+  setState({ currentEnv: newPrimaryEnvId })
 
   const continuePromotion = await promptYesNo('Do you want to continue the promotion?')
 
@@ -29,7 +30,6 @@ try {
 
   await datoCmd(`environments:promote ${newPrimaryEnvId}`)
   await datoCmd(`maintenance:off`)
-  setState({ currentEnv: newPrimaryEnvId })
 
   log(`Promotion of "${newPrimaryEnvId}" to primary environment is done.`)
   log(`The previous primary "${currentPrimaryEnvId}" environment still exists and can function as backup if a roll-back is needed.`)
