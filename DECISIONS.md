@@ -2,7 +2,7 @@
 
 Important decisions made in this project are documented here.
 
-## Forking datocms environments
+## 1. Forking datocms environments
 
 When forking a datocms environment you have 2 approaches:
 
