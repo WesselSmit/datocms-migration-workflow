@@ -62,6 +62,7 @@ function colorString(string, desiredColor = 'default') {
   const ANSI_COLORS = {
     default: '\x1b[0m',
     red: '\x1b[31m',
+    yellow: '\x1b[33m',
     blue: '\x1b[36m',
     gray: '\x1b[90m',
   }

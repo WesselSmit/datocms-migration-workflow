@@ -277,7 +277,6 @@ Things I would like to add in the future:
 - [ ] give credits & thanks to De Voorhoede for making it possible to work on and develop this package.
 - [ ] implement TSdoc in dato-fetch.d.mts
 - [ ] "allSchemaMigrations" is hardcoded in migrations.gql + 'const { allSchemaMigrations } = await datoContentRequest(query, {' is hardcoded in lib/dato-env.mjs, these should depend on the migrationsModelApiKey as specified in datocms.config.json > "datocms-mw-config".
-- [ ] the messages that inform the user which config options/state is used should be a different color to be more noticable -- everywhere where config/state is used.
 - [ ] big refactor of the codebase to get everything tidy (especially config.mjs + the functions in finder.mjs could be more functional - use more helper functions functies) + see todo comments in codebase
 - [ ] release as v1.1.0 on npm.
 - [ ] add a test directory where this package is loaded as a dependency and the commands can easily be tested (this should also note you cannot 'use npm' to test as some functions in finder.mjs will error --> a good solution for this is still necessary)

@@ -1,4 +1,5 @@
 import { datoContentRequest } from '../lib/dato-request.mjs'
+import { logInColor } from '../lib/console.mjs'
 import { getState } from '../lib/state-helpers.mjs'
 import { STATE_FILE_NAME } from '../lib/constants.mjs'
 
@@ -21,10 +22,10 @@ export default async function datoFetch(query, options) {
         ...options.headers,
         'X-Environment': envFromState,
       }
-      console.log(`Using "${envFromState}" as datocms environment to fetch from (found in ${STATE_FILE_NAME}).\n`)
+      logInColor(`Using "${envFromState}" as datocms environment to fetch from (found in ${STATE_FILE_NAME}).\n`, 'yellow')
     } else {
       console.log(`No "currentEnv" specified in ${STATE_FILE_NAME} or ${STATE_FILE_NAME} does not exist.`)
-      console.log(`Using the default environment instead.\n`)
+      logInColor(`Using the default environment instead.\n`, 'yellow')
     }
   }
 
