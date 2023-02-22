@@ -56,51 +56,63 @@ export async function readFileFromDependantAppRoot(filename) {
     errorLog(`No filename provided.`)
   }
 
-  const fileExtension = extname(filename)
+  // const fileExtension = extname(filename)
 
-  if (!fileExtension) {
-    errorLog(`No file extension provided.`)
-  }
+  // if (!fileExtension) {
+  //   errorLog(`No file extension provided.`)
+  // }
 
   const filePath = join(DEPENDANT_APP_ROOT, filename)
-  let importedFileContents
+  // let importedFileContents
 
-  switch (fileExtension) {
-    case '.js':
-    case '.mjs':
-      importedFileContents = await importJsFile(filePath)
-      break
-    case '.json':
-      importedFileContents = await importJsonFile(filePath)
-      break
-    default:
-      errorLog(`No import support for "${fileExtension}" files.`)
-  }
+  // switch (fileExtension) {
+  //   case '.js':
+  //   case '.mjs':
+  //     importedFileContents = await importJsFile(filePath)
+  //     break
+  //   case '.json':
+  //     importedFileContents = await importJsonFile(filePath)
+  //     break
+  //   default:
+  //     errorLog(`No import support for "${fileExtension}" files.`)
+  // }
 
-  return importedFileContents
+  // return importedFileContents
+
+  const fileContent = await importJsonFile(filePath)
+
+  return fileContent
 }
 
-export function writeJsFileToDependantAppRoot(filename, content) {
+export function writeJsonFileToDependantAppRoot(filename, content) {
   const filePath = findFileInDependantAppRoot(filename)
-  const contentJsString = `export default ${JSON.stringify(content, null, 2)}`
+  const json = JSON.stringify(content, null, 2)
 
-  writeFileSync(filePath, contentJsString, 'utf8')
+  writeFileSync(filePath, json, 'utf8')
 }
 
+// export function writeJsFileToDependantAppRoot(filename, content) {
+//   const filePath = findFileInDependantAppRoot(filename)
+//   const contentJsString = `export default ${JSON.stringify(content, null, 2)}`
 
-async function importJsFile(filePath) {
-  try {
-    const js = await import(filePath)
+//   writeFileSync(filePath, contentJsString, 'utf8')
+// }
 
-    return js
-  } catch (error) {
-    errorLog(error)
-  }
-}
+// todo remove unused imports
+
+// async function importJsFile(filePath) {
+//   try {
+//     const js = await import(filePath)
+
+//     return js
+//   } catch (error) {
+//     errorLog(error)
+//   }
+// }
 
 async function importJsonFile(filePath) {
   try {
-    const file = readFileSync(filePath, 'utf8')
+    const file = readFileSync(filePath, { flag: 'rs+', encoding: 'utf8' })
     const json = JSON.parse(file)
 
     return json
