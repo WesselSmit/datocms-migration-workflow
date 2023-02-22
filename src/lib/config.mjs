@@ -1,7 +1,7 @@
 import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { normaliseValue } from './cli.mjs'
-import { DEPENDANT_APP_ROOT, readFileFromDependantAppRoot } from './finder.mjs'
+import { DEPENDANT_APP_ROOT, readJsonFileFromDependantAppRoot } from './finder.mjs'
 import { errorLog, log } from './console.mjs'
 import { CONFIG_FILE_NAME, DEFAULT_CONFIG } from './constants.mjs'
 
@@ -14,7 +14,7 @@ export const config = (async () => {
     errorLog(`Could not find a ${CONFIG_FILE_NAME} in project root.`)
   }
 
-  const configuration = await readFileFromDependantAppRoot(CONFIG_FILE_NAME)
+  const configuration = await readJsonFileFromDependantAppRoot(CONFIG_FILE_NAME)
 
   const mergedConfiguration = {
     ...DEFAULT_CONFIG,

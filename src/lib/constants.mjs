@@ -1,5 +1,4 @@
 export const STATE_FILE_NAME = 'datocms-mw-state.json'
-// export const STATE_FILE_NAME = 'datocms-mw-state.mjs'
 export const CONFIG_FILE_NAME = 'datocms.config.json'
 export const DEFAULT_CONFIG = {
   profiles: {

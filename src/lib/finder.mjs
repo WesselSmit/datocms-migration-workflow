@@ -1,5 +1,5 @@
 import { readdirSync, readFileSync, writeFileSync } from 'node:fs'
-import { dirname, extname, join, resolve } from 'node:path'
+import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { errorLog } from './console.mjs'
 
@@ -51,67 +51,22 @@ export function findFileInDependantAppRoot(fileInDependantAppRoot) {
   return findDirOfFileLocation(startingDir, 'package.json')
 }
 
-export async function readFileFromDependantAppRoot(filename) {
-  if (!filename) {
-    errorLog(`No filename provided.`)
-  }
-
-  // const fileExtension = extname(filename)
-
-  // if (!fileExtension) {
-  //   errorLog(`No file extension provided.`)
-  // }
-
-  const filePath = join(DEPENDANT_APP_ROOT, filename)
-  // let importedFileContents
-
-  // switch (fileExtension) {
-  //   case '.js':
-  //   case '.mjs':
-  //     importedFileContents = await importJsFile(filePath)
-  //     break
-  //   case '.json':
-  //     importedFileContents = await importJsonFile(filePath)
-  //     break
-  //   default:
-  //     errorLog(`No import support for "${fileExtension}" files.`)
-  // }
-
-  // return importedFileContents
-
-  const fileContent = await importJsonFile(filePath)
-
-  return fileContent
-}
-
 export function writeJsonFileToDependantAppRoot(filename, content) {
   const filePath = findFileInDependantAppRoot(filename)
   const json = JSON.stringify(content, null, 2)
 
-  writeFileSync(filePath, json, 'utf8')
+  writeFileSync(filePath, json, { encoding: 'utf8' })
 }
 
-// export function writeJsFileToDependantAppRoot(filename, content) {
-//   const filePath = findFileInDependantAppRoot(filename)
-//   const contentJsString = `export default ${JSON.stringify(content, null, 2)}`
+export async function readJsonFileFromDependantAppRoot(filename) {
+  if (!filename) {
+    errorLog(`No filename provided.`)
+  }
 
-//   writeFileSync(filePath, contentJsString, 'utf8')
-// }
-
-// todo remove unused imports
-
-// async function importJsFile(filePath) {
-//   try {
-//     const js = await import(filePath)
-
-//     return js
-//   } catch (error) {
-//     errorLog(error)
-//   }
-// }
-
-async function importJsonFile(filePath) {
   try {
+    const filePath = join(DEPENDANT_APP_ROOT, filename)
+
+    // 'rs+' flag is used to cache bust (see: https://stackoverflow.com/questions/36249576/does-readfile-caches-the-content)
     const file = readFileSync(filePath, { flag: 'rs+', encoding: 'utf8' })
     const json = JSON.parse(file)
 

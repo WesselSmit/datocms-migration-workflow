@@ -12,13 +12,13 @@ Using this wrapper helps your team in the following ways:
 
 ## If you are not familiar with migrations
 If you have questions about migrations or (what they're used for. if they're the right fit for you etc.)
-I'd recommend reading the [official datocms explanation](https://www.datocms.com/docs/scripting-migrations/introduction) first, but I'll try to give my perspective aswell.
+I'd recommend reading the [official datocms explanation](https://www.datocms.com/docs/scripting-migrations/introduction) first, but I'll try to give my perspective as well.
 
 Migrations offer developers a way of making reproducible changes to the cms structure (think all models, fields and settings).
 This is useful when you want to reproduce the cms structure for multiple environments (e.g. multi-regional websites with a cms instance per region), but also makes it possible to include structural cms changes in the review process.
 
 Migrations are files that describe the changes made to the cms structure, with structure I mean all models, fields and settings, but not the actual content such as records and their values.
-The migrations can be applied in chronological order to reproduce all changes made to the cms, guaranteeing an identical cms structure everytime.
+The migrations can be applied in chronological order to reproduce all changes made to the cms, guaranteeing an identical cms structure every time.
 
 Migrations are very powerful and can help you in many ways, but they are not without their downsides; without auto-generation it requires a lot of manual work and in order to use auto-generation you need to use the datocms-cli which exposes multiple commands you'll need to remember and understand.
 That's why this library aims to simplify the auto-generation of datocms migrations for you.
@@ -76,7 +76,7 @@ You can either create a new api token with those permissions or use the standard
 Add it to a `.env` file (also see the `.env.example` file) in the root of your project.
 
 ### Ignoring files
-You `.gitignore` should include `datocms-mw-state.mjs` which is used to persist state this package uses to make it more convenient to use.
+You `.gitignore` should include `datocms-mw-state.json` which is used to persist state this package uses to make it more convenient to use.
 
 > the generated migration files should be included in your version control system, do not gitignore them!
 
@@ -183,7 +183,7 @@ Now that you've made changes to the cms structure, it's time to create a migrati
 $ npx create-migration "MIGRATION_NAME" "ENVIRONMENT_NAME"
 ```
 
-> You can also leave out "ENVIRONMENT_NAME" and the `currentEnv` as stored in `datocms-mw-state.mjs` will be used instead.
+> You can also leave out "ENVIRONMENT_NAME" and the `currentEnv` as stored in `datocms-mw-state.json` will be used instead.
 
 This will create a new migration file in the migrations directory, it also deletes and recreates the `FEATURE-test` datocms environment to ensure it is up-to-date with the latest cms changes.
 
@@ -230,7 +230,7 @@ To make this easier the package exports a `datoFetch` function that tries to mak
 The main features are:
 - Fetching content from a specific datocms environment.
   - You can specify an environment in `options.env`.
-  - The package stores your most recently used environment in a file called "datocms-mw-state.mjs", it's value will be used if no value is specified in `options.env` (enabled by default, can be disabled by setting `options.useState` to `false`).
+  - The package stores your most recently used environment in a file called `datocms-mw-state.json`, it's value will be used if no value is specified in `options.env` (enabled by default, can be disabled by setting `options.disableState` to `true`).
 - Fetch paginated data from a field.
 - Extendable with your own variables and headers.
 
@@ -274,10 +274,10 @@ This shows more advanced usage, but in the most basic usage you only have to spe
 |---|---|---|---|---|
 | `query` | GraphQL query used to fetch data form datocms | null | true | Expects a string. |
 | `options.headers` | Your custom headers to use in the fetch call. | {} | true | Only the `options.headers.Authorization` is required. |
-| `options.env` | Datocms environment to fetch data from. | datocms primary env | false | If omitted, uses state from `datocms-mw-state.mjs` unless disabled with `options.useState` set to `false` |
+| `options.env` | Datocms environment to fetch data from. | datocms primary env | false | If omitted, uses state from `datocms-mw-state.json` unless disabled with `options.disableState` set to `true` |
 | `options.vars` | Your custom variables to use in the fetch call. | {} | false | Uses `JSON.stringify()` to include variables. |
 | `options.paginatedFieldName` | Name of field to fetch data from paginated. | "" | false | Expects a string, has a max of 1 field name at the moment. |
-| `options.disableState` | Disable using `datocms-mw-state.mjs` state in fetch call. | false | false | Only uses env from state if `options.env` is not specified. |
+| `options.disableState` | Disable using `datocms-mw-state.json` state in fetch call. | false | false | Only uses env from state if `options.env` is not specified. |
 
 > `datoFetch(query, options)` expects a query as string. A common approach for this is storing queries in `template literals` or reading `.graphql|.gql` files.
 

@@ -12,7 +12,7 @@ export default function loadQuery(fileName) {
     errorLog(`Query file "${queryFilePath}" does not exist.`)
   }
 
-  const query = readFileSync(queryFilePath, 'utf8')
+  const query = readFileSync(queryFilePath, { encoding: 'utf8' })
 
   return query
 }
