@@ -29,6 +29,15 @@ That's why this library aims to simplify the auto-generation of datocms migratio
 
 ## Setup
 
+### Installation
+Install the package from npm.
+
+```sh
+$ npm install datocms-migration-workflow
+```
+
+> NOTE: if you don't want to use `datoFetch` (not recommended) you can install the package as a dev dependency. [Read more about `datoFetch`](#fetching-content-from-correct-datocms-environment).
+
 ### Requirements
 To make sure everything works this package requires the following configuration:
 - [Base configuration](#base-configuration)
